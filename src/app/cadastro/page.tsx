@@ -171,9 +171,15 @@ export default function Cadastro() {
     };
 
     const handleNext = () => {
-        if (validateStep(currentStep)) currentStep < totalSteps ? setCurrentStep(currentStep + 1) : handleSubmit();
-        else toast("Campos obrigatórios", { description: "Preencha tudo antes de continuar." });
+        if (!validateStep(currentStep)) {
+            toast("Campos obrigatórios", { description: "Preencha tudo antes de continuar." });
+            return;
+        }
+
+        if (currentStep < totalSteps) setCurrentStep(currentStep + 1);
+        else handleSubmit();
     };
+
 
     const handlePrevious = () => {
         if (currentStep > 1) setCurrentStep(currentStep - 1);
