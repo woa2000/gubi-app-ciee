@@ -157,22 +157,7 @@ export default function Step1PersonalData({
           />
         </div>
 
-        <div>
-          <Label htmlFor="grade">Situação educacional *</Label>
-          <Select
-            value={formData.grade}
-            onValueChange={(value) =>
-              updateFormData({ grade: value })
-            }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Selecione sua situação atual" />
-            </SelectTrigger>
-            <SelectContent>
-              
-            </SelectContent>
-          </Select>
-        </div>
+        
 
         <div>
           <Label htmlFor="currentStatus">Você está: *</Label>

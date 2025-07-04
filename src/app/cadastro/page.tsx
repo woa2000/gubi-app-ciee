@@ -26,10 +26,7 @@ export interface FormData {
     customGender: string;
     city: string;
     state: string;
-    // school: string;
-    // grade: string;
-    // currentStatus: string;
-
+    
     // 2
     interests: string[];
     customInterest: string;
@@ -38,11 +35,13 @@ export interface FormData {
     customEnvironment: string;
     skills: string[];
     customSkill: string;
-
+    
     // 3
+    grade: string;
     wantsFaculty: string;
-    studyFormat: string;
+    currentInstitution: string;
     institution: string;
+    studyFormat: string;
     needsFinancialSupport: string;
     wantsFinancialInfo: string;
 
@@ -87,9 +86,6 @@ export default function Cadastro() {
         customGender: "",
         city: "",
         state: "",
-        // school: "",
-        // grade: "",
-        // currentStatus: "",
         interests: [],
         customInterest: "",
         workPreference: "",
@@ -97,9 +93,11 @@ export default function Cadastro() {
         customEnvironment: "",
         skills: [],
         customSkill: "",
+        grade: "",
         wantsFaculty: "",
-        studyFormat: "",
+        currentInstitution: "",
         institution: "",
+        studyFormat: "",
         needsFinancialSupport: "",
         wantsFinancialInfo: "",
         twoYearGoal: "",
