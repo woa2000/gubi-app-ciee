@@ -25,7 +25,7 @@ export default function Step1PersonalData({
     <div className="space-y-6">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-          Dados Pessoais
+          Quem é você no seu jogo?
         </h2>
         <p className="text-gray-600">
           Vamos começar conhecendo você melhor
@@ -34,7 +34,8 @@ export default function Step1PersonalData({
 
       <div className="grid gap-4">
         <div>
-          <Label htmlFor="fullName">Nome completo *</Label>
+          <Label htmlFor="fullName">Como você se chama? *</Label>
+          <div className="mb-2"></div>
           <Input
             id="fullName"
             value={formData.fullName}
@@ -46,7 +47,8 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="email">E-mail *</Label>
+          <Label htmlFor="email">Qual o seu e-mail? *</Label>
+          <div className="mb-2"></div>
           <Input
             id="email"
             type="email"
@@ -57,7 +59,8 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="phone">Celular (WhatsApp - opcional)</Label>
+          <Label htmlFor="phone">Se tiver, qual o seu número?</Label>
+          <div className="mb-2"></div>
           <Input
             id="phone"
             value={formData.phone}
@@ -67,7 +70,8 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="birthDate">Data de nascimento *</Label>
+          <Label htmlFor="birthDate">Quando é o seu aniversário? *</Label>
+          <div className="mb-2"></div>
           <Input
             id="birthDate"
             type="date"
@@ -79,7 +83,8 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="gender">Gênero *</Label>
+          <Label htmlFor="gender">Você se indentifica com que gênero? *</Label>
+          <div className="mb-2"></div>
           <Select
             value={formData.gender}
             onValueChange={(value) =>
@@ -113,7 +118,8 @@ export default function Step1PersonalData({
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="city">Cidade *</Label>
+            <Label htmlFor="city">De que cidade você joga sua vida? *</Label>
+            <div className="mb-2"></div>
             <Input
               id="city"
               value={formData.city}
@@ -122,7 +128,8 @@ export default function Step1PersonalData({
             />
           </div>
           <div>
-            <Label htmlFor="state">Estado *</Label>
+            <Label htmlFor="state">De que estado você joga sua vida? *</Label>
+            <div className="mb-2"></div>
             <Input
               id="state"
               value={formData.state}
@@ -131,8 +138,12 @@ export default function Step1PersonalData({
             />
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
 
-        <div>
+{/* <div>
           <Label htmlFor="school">
             Nome da escola ou instituição *
           </Label>
@@ -158,7 +169,7 @@ export default function Step1PersonalData({
               <SelectValue placeholder="Selecione sua situação atual" />
             </SelectTrigger>
             <SelectContent>
-              {/* ...itens como antes */}
+              
             </SelectContent>
           </Select>
         </div>
@@ -185,8 +196,4 @@ export default function Step1PersonalData({
               </SelectItem>
             </SelectContent>
           </Select>
-        </div>
-      </div>
-    </div>
-  );
-}
+        </div> */}

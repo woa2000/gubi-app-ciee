@@ -26,15 +26,15 @@ export interface FormData {
     customGender: string;
     city: string;
     state: string;
-    school: string;
-    grade: string;
-    currentStatus: string;
+    // school: string;
+    // grade: string;
+    // currentStatus: string;
 
     // 2
     interests: string[];
     customInterest: string;
     workPreference: string;
-    workEnvironment: string;
+    workEnvironments: string[];
     customEnvironment: string;
     skills: string[];
     customSkill: string;
@@ -87,13 +87,13 @@ export default function Cadastro() {
         customGender: "",
         city: "",
         state: "",
-        school: "",
-        grade: "",
-        currentStatus: "",
+        // school: "",
+        // grade: "",
+        // currentStatus: "",
         interests: [],
         customInterest: "",
         workPreference: "",
-        workEnvironment: "",
+        workEnvironments: [],
         customEnvironment: "",
         skills: [],
         customSkill: "",
@@ -142,11 +142,11 @@ export default function Cadastro() {
         switch (step) {
             case 1:
                 return !!(formData.fullName && formData.email && formData.birthDate &&
-                    formData.gender && formData.city && formData.state &&
-                    formData.school && formData.grade && formData.currentStatus);
+                    formData.gender && formData.city && formData.state /* && */
+                    /* formData.school && formData.grade && formData.currentStatus */ );
             case 2:
                 return !!(formData.interests.length > 0 && formData.workPreference &&
-                    formData.workEnvironment && formData.skills.length > 0);
+                    formData.workEnvironments.length > 0 && formData.skills.length > 0);
             case 3:
                 return !!(formData.wantsFaculty && formData.studyFormat &&
                     formData.needsFinancialSupport && formData.wantsFinancialInfo);

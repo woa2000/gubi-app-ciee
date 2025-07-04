@@ -72,7 +72,7 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.929 0.013 255.508);
   --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --ring: oklch(0.565 0.258 289.042);
 
   /* cores de gráfico (se usar) */
   --chart-1: oklch(0.646 0.222 41.116);

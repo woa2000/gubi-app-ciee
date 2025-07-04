@@ -88,31 +88,33 @@ export default function Step3Education({
       )}
 
       {/* Instituição */}
-      <div>
-        <Label htmlFor="institution">
-          {formData.wantsFaculty === "cursando"
-            ? "Em qual instituição você estuda?"
-            : formData.wantsFaculty === "ja-concluida"
-            ? "Em qual instituição você se formou?"
-            : "Já tem alguma instituição em mente?"}
-        </Label>
-        <Input
-          id="institution"
-          value={formData.institution}
-          onChange={(e) =>
-            updateFormData({ institution: e.target.value })
-          }
-          placeholder={
-            formData.wantsFaculty === "cursando"
-              ? "Nome da sua faculdade atual"
+      {showStudyFormat && (
+        <div>
+          <Label htmlFor="institution">
+            {formData.wantsFaculty === "cursando"
+              ? "Em qual instituição você estuda?"
               : formData.wantsFaculty === "ja-concluida"
-              ? "Nome da instituição onde se formou"
-              : "Nome da instituição (opcional)"
-          }
-          className="mt-2"
-          disabled={formData.wantsFaculty === "nao-pretendo"}
-        />
-      </div>
+                ? "Em qual instituição você se formou?"
+                : "Já tem alguma instituição em mente?"}
+          </Label>
+          <Input
+            id="institution"
+            value={formData.institution}
+            onChange={(e) =>
+              updateFormData({ institution: e.target.value })
+            }
+            placeholder={
+              formData.wantsFaculty === "cursando"
+                ? "Nome da sua faculdade atual"
+                : formData.wantsFaculty === "ja-concluida"
+                  ? "Nome da instituição onde se formou"
+                  : "Nome da instituição (opcional)"
+            }
+            className="mt-2"
+            disabled={formData.wantsFaculty === "nao-pretendo"}
+          />
+        </div>
+      )}
 
       {/* Apoio financeiro e info sobre bolsas */}
       {showStudyFormat && (

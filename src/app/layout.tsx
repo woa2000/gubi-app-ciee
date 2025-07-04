@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gubi ProFuturo",
-  description: "Gubi ProFuturo App",
+  title: "Gubi Jornada ProFuturo",
+  description: "Gubi Jornada ProFuturo App",
 };
 
 export default function RootLayout({
