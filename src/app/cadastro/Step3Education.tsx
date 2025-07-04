@@ -32,7 +32,7 @@ export default function Step3Education({
       {/* Cabeçalho */}
       <div className="text-center mb-6">
         <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-          Educação Superior
+          Seu futuro no game
         </h2>
         <p className="text-gray-600">
           Vamos falar sobre seus planos para o ensino superior

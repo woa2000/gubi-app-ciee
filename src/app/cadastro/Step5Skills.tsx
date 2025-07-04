@@ -79,7 +79,7 @@ export default function Step5Skills({
       {/* Cabeçalho */}
       <div className="text-center mb-6">
         <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-          Habilidades e Estilo de Aprendizagem
+          Suas forças e desafios no jogo
         </h2>
         <p className="text-gray-600">
           Identifique suas habilidades e como aprende melhor

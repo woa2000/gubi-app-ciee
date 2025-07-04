@@ -38,7 +38,7 @@ export default function Step4Employment({
       {/* Cabeçalho */}
       <div className="text-center mb-6">
         <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-          Empregabilidade e Experiência
+          Missões e experiências na vida real
         </h2>
         <p className="text-gray-600">
           Fale sobre seus objetivos profissionais

@@ -124,14 +124,14 @@ export default function Cadastro() {
     const totalSteps = 8;
     const progress = (currentStep / totalSteps) * 100;
     const stepTitles = [
-        "Dados Pessoais",
-        "Interesses e Preferências",
-        "Educação Superior",
-        "Empregabilidade",
-        "Habilidades",
-        "Desafios e Acesso Digital",
-        "Situação Socioeconômica",
-        "Finalização"
+        "Quem é você no seu jogo?",
+        "Seu estilo e escolhas no jogo da vida",
+        "Seu futuro no game",
+        "Missões e experiências na vida real",
+        "Suas forças e desafios no jogo",
+        "Seu mundo digital e desafios",
+        "Seu time e suporte na jornada",
+        "Inicio da jornada"
     ];
 
     const updateFormData = (updates: Partial<FormData>) => setFormData(prev => ({ ...prev, ...updates }));
@@ -146,7 +146,7 @@ export default function Cadastro() {
                 return !!(formData.interests.length > 0 && formData.workPreference &&
                     formData.workEnvironments.length > 0 && formData.skills.length > 0);
             case 3:
-                return !!(formData.wantsFaculty && formData.studyFormat &&
+                return !!(formData.grade && formData.wantsFaculty && formData.studyFormat &&
                     formData.needsFinancialSupport && formData.wantsFinancialInfo);
             case 4:
                 return !!(formData.twoYearGoal && formData.workWhileStudying &&
@@ -206,7 +206,7 @@ export default function Cadastro() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
             <div className="min-h-screen py-8 px-4">
-                <div className="max-w-2xl mx-auto">
+                <div className="max-w-2xl py-12 mx-auto">
                     <div className="text-center mb-8">
                         <h1 className="text-3xl font-bold text-gray-900 mb-2">Gubi Jornada ProFuturo</h1>
                         <p className="text-gray-600">

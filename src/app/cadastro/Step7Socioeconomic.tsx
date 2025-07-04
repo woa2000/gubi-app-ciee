@@ -26,7 +26,7 @@ export default function Step7Socioeconomic({
       {/* Cabeçalho */}
       <div className="text-center mb-6">
         <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-          Situação Socioeconômica
+          Seu time e suporte na jornada
         </h2>
         <p className="text-gray-600">
           Estas informações são opcionais e nos ajudam a entender melhor seu contexto
