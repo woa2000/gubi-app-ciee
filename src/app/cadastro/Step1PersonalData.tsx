@@ -10,11 +10,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FormData } from "./page";
+import { RegisterForm } from "@/types/user";
 
 interface Props {
-  formData: FormData;
-  updateFormData: (updates: Partial<FormData>) => void;
+  formData: RegisterForm;
+  updateFormData: (updates: Partial<RegisterForm>) => void;
 }
 
 export default function Step1PersonalData({
@@ -130,43 +130,3 @@ export default function Step1PersonalData({
     </div>
   );
 }
-
-{/* <div>
-          <Label htmlFor="school">
-            Nome da escola ou instituição *
-          </Label>
-          <Input
-            id="school"
-            value={formData.school}
-            onChange={(e) =>
-              updateFormData({ school: e.target.value })
-            }
-            placeholder="Nome da sua escola/faculdade"
-          />
-        </div>
-
-        
-
-        <div>
-          <Label htmlFor="currentStatus">Você está: *</Label>
-          <Select
-            value={formData.currentStatus}
-            onValueChange={(value) =>
-              updateFormData({ currentStatus: value })
-            }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Selecione sua situação atual" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="estudando">Estudando</SelectItem>
-              <SelectItem value="trabalhando">Trabalhando</SelectItem>
-              <SelectItem value="procurando-emprego">
-                Procurando emprego
-              </SelectItem>
-              <SelectItem value="nenhuma">
-                Nenhuma das opções acima
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </div> */}

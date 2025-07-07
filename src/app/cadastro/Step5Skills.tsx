@@ -11,11 +11,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FormData } from "./page";
+import { RegisterForm } from "@/types/user";
 
 interface Props {
-  formData: FormData;
-  updateFormData: (updates: Partial<FormData>) => void;
+  formData: RegisterForm;
+  updateFormData: (updates: Partial<RegisterForm>) => void;
 }
 
 export default function Step5Skills({
@@ -49,7 +49,7 @@ export default function Step5Skills({
   ];
 
   const handleCheckboxChange = (
-    field: keyof FormData,
+    field: keyof RegisterForm,
     limit: number | null,
     value: string,
     checked: boolean
@@ -63,7 +63,7 @@ export default function Step5Skills({
     } else {
       updated = current.filter(v => v !== value);
     }
-    updateFormData({ [field]: updated } as Partial<FormData>);
+    updateFormData({ [field]: updated } as Partial<RegisterForm>);
   };
 
   const learningPrefs = [

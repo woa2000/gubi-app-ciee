@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner"
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import Image from 'next/image'
+
+import { RegisterForm } from "@/types/user";
 
 import Step1PersonalData from "./Step1PersonalData";
 import Step2Interests from "./Step2Interests";
@@ -16,67 +19,9 @@ import Step6Challenges from "./Step6Challenges";
 import Step7Socioeconomic from "./Step7Socioeconomic";
 import Step8Completion from "./Step8Completion";
 
-export interface FormData {
-    // 1
-    fullName: string;
-    email: string;
-    phone: string;
-    birthDate: string;
-    gender: string;
-    customGender: string;
-    location: string;
-    
-    // 2
-    interests: string[];
-    customInterest: string;
-    workPreference: string;
-    workEnvironment: string;
-    companyType: string;
-    skills: string[];
-    customSkill: string;
-    
-    // 3
-    grade: string;
-    wantsFaculty: string;
-    currentInstitution: string;
-    institution: string;
-    studyFormat: string;
-    needsFinancialSupport: string;
-    wantsFinancialInfo: string;
-
-    // 4
-    twoYearGoal: string;
-    workWhileStudying: string;
-    hasInternshipExperience: string;
-
-    // 5
-    softSkills: string[];
-    skillsToImprove: string[];
-    hardSkills: string[];
-    learningPreference: string;
-    studyFrequency: string;
-
-    // 6
-    currentDifficulties: string[];
-    thoughtAboutQuitting: string;
-    internetAccess: string;
-    availableDevices: string[];
-
-    // 7
-    participatesInSocialProgram: string;
-    householdSize: string;
-    peopleWithIncome: string;
-
-    // 8
-    motivation: string;
-    howFoundUs: string;
-    acceptsTerms: boolean;
-    acceptsDataUsage: boolean;
-}
-
 export default function Cadastro() {
     const [currentStep, setCurrentStep] = useState(1);
-    const [formData, setFormData] = useState<FormData>({
+    const [formData, setFormData] = useState<RegisterForm>({
         fullName: "",
         email: "",
         phone: "",
@@ -111,6 +56,7 @@ export default function Cadastro() {
         internetAccess: "",
         availableDevices: [],
         participatesInSocialProgram: "",
+        socialProgram: "",
         householdSize: "",
         peopleWithIncome: "",
         motivation: "",
@@ -132,13 +78,13 @@ export default function Cadastro() {
         "Inicio da jornada"
     ];
 
-    const updateFormData = (updates: Partial<FormData>) => setFormData(prev => ({ ...prev, ...updates }));
+    const updateFormData = (updates: Partial<RegisterForm>) => setFormData(prev => ({ ...prev, ...updates }));
 
     const validateStep = (step: number): boolean => {
         switch (step) {
             case 1:
                 return !!(formData.fullName && formData.email && formData.birthDate &&
-                    formData.gender && formData.location );
+                    formData.gender && formData.location);
             case 2:
                 return !!(formData.interests.length > 0 && formData.workPreference &&
                     formData.workEnvironment && formData.companyType && formData.skills.length > 0);
@@ -155,8 +101,14 @@ export default function Cadastro() {
                 return !!(formData.thoughtAboutQuitting && formData.internetAccess &&
                     formData.availableDevices.length > 0);
             case 7:
-                return !!(formData.participatesInSocialProgram && formData.householdSize &&
-                    formData.peopleWithIncome);
+                return !!(
+                    formData.householdSize &&
+                    formData.peopleWithIncome &&
+                    (
+                        formData.participatesInSocialProgram !== "sim" ||
+                        (formData.participatesInSocialProgram === "sim" && formData.socialProgram)
+                    )
+                );
             case 8:
                 return !!(formData.motivation && formData.howFoundUs &&
                     formData.acceptsTerms && formData.acceptsDataUsage);
@@ -171,13 +123,17 @@ export default function Cadastro() {
             return;
         }
 
-        if (currentStep < totalSteps) setCurrentStep(currentStep + 1);
-        else handleSubmit();
+        if (currentStep < totalSteps) {
+            setCurrentStep(currentStep + 1);
+            window.scrollTo(0, 0);
+        } else handleSubmit();
     };
 
-
     const handlePrevious = () => {
-        if (currentStep > 1) setCurrentStep(currentStep - 1);
+        if (currentStep > 1) {
+            setCurrentStep(currentStep - 1);
+            window.scrollTo(0, 0);
+        }
     };
 
     const handleSubmit = () => {
@@ -203,9 +159,15 @@ export default function Cadastro() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
             <div className="min-h-screen py-8 px-4">
-                <div className="max-w-2xl py-12 mx-auto">
-                    <div className="text-center mb-8">
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">Gubi Jornada ProFuturo</h1>
+                <div className="max-w-2xl py-4 mx-auto">
+                    <div className="text-center mb-8 flex flex-col items-center justify-start">
+                        <Image
+                            src="/gubi-logo.png"
+                            alt="Logo"
+                            width={150}
+                            height={150}
+                        />
+                        <h1 className="text-3xl font-bold text-gray-900 mb-2">Jornada ProFuturo</h1>
                         <p className="text-gray-600">
                             Etapa {currentStep} de {totalSteps}: {stepTitles[currentStep - 1]}
                         </p>

@@ -4,11 +4,11 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
-import { FormData } from "./page";
+import { RegisterForm } from "@/types/user";
 
 interface Props {
-  formData: FormData;
-  updateFormData: (updates: Partial<FormData>) => void;
+  formData: RegisterForm;
+  updateFormData: (updates: Partial<RegisterForm>) => void;
 }
 
 export default function Step7Socioeconomic({
@@ -53,6 +53,20 @@ export default function Step7Socioeconomic({
           ))}
         </RadioGroup>
       </div>
+      {formData.participatesInSocialProgram == "sim" && (
+        <div>
+          <Label htmlFor="socialProgram">Qual ou quais foram os programas? *</Label>
+          <div className="mb-2"></div>
+          <Input
+            id="socialProgram"
+            value={formData.socialProgram}
+            onChange={(e) =>
+              updateFormData({ socialProgram: e.target.value })
+            }
+            placeholder="Digite o nome do programa"
+          />
+        </div>
+      )}
 
       {/* Tamanho da família */}
       <div>
@@ -93,7 +107,7 @@ export default function Step7Socioeconomic({
       {/* Aviso de privacidade */}
       <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
         <p className="text-sm text-blue-800">
-          <strong>Privacidade:</strong> Estas informações são tratadas com total confidencialidade 
+          <strong>Privacidade:</strong> Estas informações são tratadas com total confidencialidade
           e usadas apenas para fins estatísticos e melhoria dos nossos programas.
         </p>
       </div>

@@ -5,11 +5,11 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { FormData } from "./page";
+import { RegisterForm } from "@/types/user";
 
 interface Props {
-  formData: FormData;
-  updateFormData: (updates: Partial<FormData>) => void;
+  formData: RegisterForm;
+  updateFormData: (updates: Partial<RegisterForm>) => void;
 }
 
 export default function Step8Completion({

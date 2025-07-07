@@ -4,11 +4,11 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
-import { FormData } from "./page";
+import { RegisterForm } from "@/types/user";
 
 interface Props {
-  formData: FormData;
-  updateFormData: (updates: Partial<FormData>) => void;
+  formData: RegisterForm;
+  updateFormData: (updates: Partial<RegisterForm>) => void;
 }
 
 export default function Step6Challenges({
@@ -27,7 +27,7 @@ export default function Step6Challenges({
   const deviceOptions = ["Celular", "Computador", "Tablet", "Nenhum"];
 
   const handleCheckbox = (
-    field: keyof FormData,
+    field: keyof RegisterForm,
     value: string,
     checked: boolean
   ) => {
@@ -35,7 +35,7 @@ export default function Step6Challenges({
     const updated = checked
       ? [...current, value]
       : current.filter(v => v !== value);
-    updateFormData({ [field]: updated } as Partial<FormData>);
+    updateFormData({ [field]: updated } as Partial<RegisterForm>);
   };
 
   const thoughtOptions = [
