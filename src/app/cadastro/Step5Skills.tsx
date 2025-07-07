@@ -209,7 +209,7 @@ export default function Step5Skills({
           </SelectTrigger>
           <SelectContent>
             {learningPrefs.map(opt => (
-              <SelectItem value={opt.id}>{opt.label}</SelectItem>
+              <SelectItem key={opt.id} value={opt.id}>{opt.label}</SelectItem>
             ))}
           </SelectContent>
         </Select>
