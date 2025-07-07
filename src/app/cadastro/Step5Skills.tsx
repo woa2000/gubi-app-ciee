@@ -4,6 +4,13 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { FormData } from "./page";
 
 interface Props {
@@ -65,6 +72,7 @@ export default function Step5Skills({
     { id: "exercicios", label: "Exercícios" },
     { id: "leitura", label: "Leitura" },
     { id: "conversas", label: "Conversas" },
+    { id: "games-educativos", label: "Games educativos" },
   ];
 
   const frequencies = [
@@ -189,20 +197,22 @@ export default function Step5Skills({
         <Label className="text-base font-medium">
           Como prefere aprender? *
         </Label>
-        <RadioGroup
+        <div className="mb-2"></div>
+        <Select
           value={formData.learningPreference}
-          onValueChange={value =>
+          onValueChange={(value) =>
             updateFormData({ learningPreference: value })
           }
-          className="mt-2 space-y-2"
         >
-          {learningPrefs.map(opt => (
-            <div key={opt.id} className="flex items-center space-x-2">
-              <RadioGroupItem value={opt.id} id={opt.id} />
-              <Label htmlFor={opt.id}>{opt.label}</Label>
-            </div>
-          ))}
-        </RadioGroup>
+          <SelectTrigger>
+            <SelectValue placeholder="Selecione seu objetivo" />
+          </SelectTrigger>
+          <SelectContent>
+            {learningPrefs.map(opt => (
+              <SelectItem value={opt.id}>{opt.label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Frequência de Estudo */}

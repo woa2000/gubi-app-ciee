@@ -156,12 +156,12 @@ export default function Step3Education({
       <div>
         <Label className="text-base font-medium">
           {formData.wantsFaculty === "cursando"
-            ? "Você precisa de apoio financeiro para estudar? *"
+            ? "Você precisa de apoio financeiro para fazer faculdade? *"
             : formData.wantsFaculty === "ja-concluida"
-              ? "Você precisou de apoio financeiro para estudar? *"
+              ? "Você precisou de apoio financeiro para fazer faculdade? *"
               : formData.wantsFaculty === "nao-pretendo"
-                ? "Você precisaria de apoio financeiro para estudar? *"
-                : "Você precisará de apoio financeiro para estudar? *"}
+                ? "Você precisaria de apoio financeiro para fazer faculdade? *"
+                : "Você precisará de apoio financeiro para fazer faculdade? *"}
         </Label>
         <RadioGroup
           value={formData.needsFinancialSupport}

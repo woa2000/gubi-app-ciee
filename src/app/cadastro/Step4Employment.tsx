@@ -3,6 +3,13 @@
 import React from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { FormData } from "./page";
 
 interface Props {
@@ -19,6 +26,10 @@ export default function Step4Employment({
     { id: "ingressar-faculdade", label: "Ingressar na faculdade" },
     { id: "curso-tecnico", label: "Curso técnico" },
     { id: "empreender", label: "Empreender" },
+    { id: "aprender-ferramenta-tecnica", label: "Aprender alguma ferramenta técnica" },
+    { id: "melhorar-habilidades-sociais", label: "Melhorar habilidades sociais" },
+    { id: "fazer-intercambio", label: "Fazer intercâmbio" },
+    { id: "aprender-idioma", label: "Aprender idioma" },
     { id: "ainda-nao-sei", label: "Ainda não sei" },
   ];
 
@@ -50,20 +61,22 @@ export default function Step4Employment({
         <Label className="text-base font-medium">
           Seu maior objetivo nos próximos 2 anos: *
         </Label>
-        <RadioGroup
+        <div className="mb-2"></div>
+        <Select
           value={formData.twoYearGoal}
           onValueChange={(value) =>
             updateFormData({ twoYearGoal: value })
           }
-          className="mt-2 space-y-2"
         >
-          {twoYearOptions.map(opt => (
-            <div key={opt.id} className="flex items-center space-x-2">
-              <RadioGroupItem value={opt.id} id={opt.id} />
-              <Label htmlFor={opt.id}>{opt.label}</Label>
-            </div>
-          ))}
-        </RadioGroup>
+          <SelectTrigger>
+            <SelectValue placeholder="Selecione seu objetivo" />
+          </SelectTrigger>
+          <SelectContent>
+            {twoYearOptions.map(opt => (
+              <SelectItem key={opt.id} value={opt.id}>{opt.label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Trabalhar enquanto estuda */}

@@ -116,27 +116,15 @@ export default function Step1PersonalData({
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="city">De que cidade você joga sua vida? *</Label>
-            <div className="mb-2"></div>
-            <Input
-              id="city"
-              value={formData.city}
-              onChange={(e) => updateFormData({ city: e.target.value })}
-              placeholder="Sua cidade"
-            />
-          </div>
-          <div>
-            <Label htmlFor="state">De que estado você joga sua vida? *</Label>
-            <div className="mb-2"></div>
-            <Input
-              id="state"
-              value={formData.state}
-              onChange={(e) => updateFormData({ state: e.target.value })}
-              placeholder="Seu estado"
-            />
-          </div>
+        <div>
+          <Label htmlFor="city">De onde você joga sua vida? *</Label>
+          <div className="mb-2"></div>
+          <Input
+            id="location"
+            value={formData.location}
+            onChange={(e) => updateFormData({ location: e.target.value })}
+            placeholder="Sua cidade e estado"
+          />
         </div>
       </div>
     </div>
