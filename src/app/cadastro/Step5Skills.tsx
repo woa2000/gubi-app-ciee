@@ -23,29 +23,46 @@ export default function Step5Skills({
   updateFormData,
 }: Props) {
   const softSkillOptions = [
-    "Comunicação",
-    "Criatividade",
-    "Persistência",
-    "Organização",
-    "Trabalho em equipe",
-    "Empatia",
-    "Liderança",
-    "Flexibilidade",
-    "Resolução de problemas",
-    "Inteligência emocional",
+    { id: "comunicacao", label: "Comunicação" },
+    { id: "criatividade", label: "Criatividade" },
+    { id: "persistencia", label: "Persistência" },
+    { id: "organizacao", label: "Organização" },
+    { id: "trabalho-equipe", label: "Trabalho em equipe" },
+    { id: "empatia", label: "Empatia" },
+    { id: "lideranca", label: "Liderança" },
+    { id: "flexibilidade", label: "Flexibilidade" },
+    { id: "resolucao-problemas", label: "Resolução de problemas" },
+    { id: "inteligencia-emocional", label: "Inteligência emocional" }
   ];
 
   const hardSkillOptions = [
-    "Excel",
-    "Power BI",
-    "Canva",
-    "Python",
-    "Banco de dados",
-    "Atendimento ao cliente",
-    "Criação de conteúdo",
-    "Vendas",
-    "Design gráfico",
-    "Nenhuma",
+    { id: "excel", label: "Excel" },
+    { id: "power-bi", label: "Power BI" },
+    { id: "canva", label: "Canva" }, 
+    { id: "python", label: "Python" },
+    { id: "banco-dados", label: "Banco de dados" },
+    { id: "atendimento-cliente", label: "Atendimento ao cliente" },
+    { id: "criacao-conteudo", label: "Criação de conteúdo" },
+    { id: "vendas", label: "Vendas" },
+    { id: "design-grafico", label: "Design gráfico" },
+    { id: "nenhuma", label: "Nenhuma" }
+  ];
+
+
+  const learningPrefs = [
+    { id: "aulas-praticas", label: "Aulas práticas" },
+    { id: "videos-curtos", label: "Vídeos curtos" },
+    { id: "exercicios", label: "Exercícios" },
+    { id: "leitura", label: "Leitura" },
+    { id: "conversas", label: "Conversas" },
+    { id: "games-educativos", label: "Games educativos" },
+  ];
+
+  const frequencies = [
+    { id: "todos-dias", label: "Todos os dias" },
+    { id: "algumas-vezes", label: "Algumas vezes por semana" },
+    { id: "raramente", label: "Raramente" },
+    { id: "nunca", label: "Nunca" },
   ];
 
   const handleCheckboxChange = (
@@ -66,22 +83,6 @@ export default function Step5Skills({
     updateFormData({ [field]: updated } as Partial<RegisterForm>);
   };
 
-  const learningPrefs = [
-    { id: "aulas-praticas", label: "Aulas práticas" },
-    { id: "videos-curtos", label: "Vídeos curtos" },
-    { id: "exercicios", label: "Exercícios" },
-    { id: "leitura", label: "Leitura" },
-    { id: "conversas", label: "Conversas" },
-    { id: "games-educativos", label: "Games educativos" },
-  ];
-
-  const frequencies = [
-    { id: "todos-dias", label: "Todos os dias" },
-    { id: "algumas-vezes", label: "Algumas vezes por semana" },
-    { id: "raramente", label: "Raramente" },
-    { id: "nunca", label: "Nunca" },
-  ];
-
   return (
     <div className="space-y-6">
       {/* Cabeçalho */}
@@ -101,25 +102,25 @@ export default function Step5Skills({
         </Label>
         <div className="grid grid-cols-2 gap-3 mt-3">
           {softSkillOptions.map(skill => (
-            <div key={skill} className="flex items-center space-x-2">
+            <div key={skill.id} className="flex items-center space-x-2">
               <Checkbox
-                id={`soft-${skill}`}
-                checked={formData.softSkills?.includes(skill)}
+                id={`soft-${skill.id}`}
+                checked={formData.softSkills?.includes(skill.id)}
                 onCheckedChange={checked =>
                   handleCheckboxChange(
                     "softSkills",
                     2,
-                    skill,
+                    skill.id,
                     checked as boolean
                   )
                 }
                 disabled={
-                  !formData.softSkills?.includes(skill) &&
+                  !formData.softSkills?.includes(skill.id) &&
                   (formData.softSkills?.length || 0) >= 2
                 }
               />
-              <Label htmlFor={`soft-${skill}`} className="text-sm">
-                {skill}
+              <Label htmlFor={`soft-${skill.id}`} className="text-sm">
+                {skill.label}
               </Label>
             </div>
           ))}
@@ -136,25 +137,25 @@ export default function Step5Skills({
         </Label>
         <div className="grid grid-cols-2 gap-3 mt-3">
           {softSkillOptions.map(skill => (
-            <div key={skill} className="flex items-center space-x-2">
+            <div key={skill.id} className="flex items-center space-x-2">
               <Checkbox
-                id={`improve-${skill}`}
-                checked={formData.skillsToImprove?.includes(skill)}
+                id={`improve-${skill.id}`}
+                checked={formData.skillsToImprove?.includes(skill.id)}
                 onCheckedChange={checked =>
                   handleCheckboxChange(
                     "skillsToImprove",
                     3,
-                    skill,
+                    skill.id,
                     checked as boolean
                   )
                 }
                 disabled={
-                  !formData.skillsToImprove?.includes(skill) &&
+                  !formData.skillsToImprove?.includes(skill.id) &&
                   (formData.skillsToImprove?.length || 0) >= 3
                 }
               />
-              <Label htmlFor={`improve-${skill}`} className="text-sm">
-                {skill}
+              <Label htmlFor={`improve-${skill.id}`} className="text-sm">
+                {skill.label}
               </Label>
             </div>
           ))}
@@ -171,21 +172,21 @@ export default function Step5Skills({
         </Label>
         <div className="grid grid-cols-2 gap-3 mt-3">
           {hardSkillOptions.map(skill => (
-            <div key={skill} className="flex items-center space-x-2">
+            <div key={skill.id} className="flex items-center space-x-2">
               <Checkbox
-                id={`hard-${skill}`}
-                checked={formData.hardSkills?.includes(skill)}
+                id={`hard-${skill.id}`}
+                checked={formData.hardSkills?.includes(skill.id)}
                 onCheckedChange={checked =>
                   handleCheckboxChange(
                     "hardSkills",
                     null,
-                    skill,
+                    skill.id,
                     checked as boolean
                   )
                 }
               />
-              <Label htmlFor={`hard-${skill}`} className="text-sm">
-                {skill}
+              <Label htmlFor={`hard-${skill.id}`} className="text-sm">
+                {skill.label}
               </Label>
             </div>
           ))}
