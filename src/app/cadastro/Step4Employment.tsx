@@ -3,13 +3,7 @@
 import React from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { RegisterForm } from "@/types/user";
 
 interface Props {
@@ -22,27 +16,36 @@ export default function Step4Employment({
   updateFormData,
 }: Props) {
   const twoYearOptions = [
-    { id: "conseguir-emprego", label: "Conseguir emprego" },
-    { id: "ingressar-faculdade", label: "Ingressar na faculdade" },
-    { id: "curso-tecnico", label: "Curso técnico" },
+    { id: "conseguir_emprego", label: "Conseguir emprego" },
+    { id: "ingressar_faculdade", label: "Ingressar na faculdade" },
+    { id: "curso_tecnico", label: "Curso técnico" },
     { id: "empreender", label: "Empreender" },
-    { id: "aprender-ferramenta-tecnica", label: "Aprender alguma ferramenta técnica" },
-    { id: "melhorar-habilidades-sociais", label: "Melhorar habilidades sociais" },
-    { id: "fazer-intercambio", label: "Fazer intercâmbio" },
-    { id: "aprender-idioma", label: "Aprender idioma" },
-    { id: "ainda-nao-sei", label: "Ainda não sei" },
+    { id: "aprender_ferramenta_tecnica", label: "Aprender alguma ferramenta técnica" },
+    { id: "melhorar_habilidades_sociais", label: "Melhorar habilidades sociais" },
+    { id: "fazer_intercambio", label: "Fazer intercâmbio" },
+    { id: "aprender_idioma", label: "Aprender idioma" },
+    { id: "ainda_nao_sei", label: "Ainda não sei" },
   ];
 
   const workWhileStudyingOptions = [
-    { id: "sim-trabalhar", value: "sim", label: "Sim" },
-    { id: "nao-trabalhar", value: "nao", label: "Não" },
-    { id: "talvez-trabalhar", value: "talvez", label: "Talvez" },
+    { id: "sim_trabalhar", value: "sim", label: "Sim" },
+    { id: "nao_trabalhar", value: "nao", label: "Não" },
+    { id: "talvez_trabalhar", value: "talvez", label: "Talvez" },
   ];
 
   const internshipOptions = [
-    { id: "sim-estagio", value: "sim", label: "Sim" },
-    { id: "nao-estagio", value: "nao", label: "Não" },
+    { id: "sim_estagio", value: "sim", label: "Sim" },
+    { id: "nao_estagio", value: "nao", label: "Não" },
   ];
+
+  const handleTwoYearChange = (id: string, checked: boolean) => {
+    const current = formData.twoYearGoals || [];
+    if (checked && current.length < 3) {
+      updateFormData({ twoYearGoals: [...current, id] });
+    } else if (!checked) {
+      updateFormData({ twoYearGoals: current.filter((i) => i !== id) });
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -59,24 +62,35 @@ export default function Step4Employment({
       {/* Objetivo em 2 anos */}
       <div>
         <Label className="text-base font-medium">
-          Seu maior objetivo nos próximos 2 anos: *
+          Seu maior objetivo nos próximos 2 anos (até 2): *
         </Label>
         <div className="mb-2"></div>
-        <Select
-          value={formData.twoYearGoal}
-          onValueChange={(value) =>
-            updateFormData({ twoYearGoal: value })
-          }
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Selecione seu objetivo" />
-          </SelectTrigger>
-          <SelectContent>
-            {twoYearOptions.map(opt => (
-              <SelectItem key={opt.id} value={opt.id}>{opt.label}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="grid grid-cols-2 gap-3 mt-3">
+          {twoYearOptions.map(twoYear => (
+            <div key={twoYear.id} className="flex items-center space-x-2">
+              <Checkbox
+                id={`two-year-${twoYear.id}`}
+                checked={formData.twoYearGoals?.includes(twoYear.id)}
+                onCheckedChange={checked =>
+                  handleTwoYearChange(
+                    twoYear.id,
+                    checked as boolean
+                  )
+                }
+                disabled={
+                  !formData.twoYearGoals?.includes(twoYear.id) &&
+                  (formData.twoYearGoals?.length || 0) >= 2
+                }
+              />
+              <Label htmlFor={`two-year-${twoYear.id}`} className="text-sm">
+                {twoYear.label}
+              </Label>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-gray-500 mt-2">
+          Selecionadas: {formData.twoYearGoals?.length || 0}/2
+        </p>
       </div>
 
       {/* Trabalhar enquanto estuda */}

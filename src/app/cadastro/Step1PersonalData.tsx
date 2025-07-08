@@ -21,6 +21,21 @@ export default function Step1PersonalData({
   formData,
   updateFormData,
 }: Props) {
+  const formatPhone = (value: string) => {
+    const digits = value.replace(/\D/g, "")
+
+    if (digits.length === 0) return ""
+    if (digits.length < 3) return `(${digits}`
+
+    if (digits.length < 7)
+      return `(${digits.slice(0, 2)}) ${digits.slice(2)}`
+
+    if (digits.length <= 10)
+      return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`
+
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`
+  }
+
   return (
     <div className="space-y-6">
       <div className="text-center mb-6">
@@ -64,8 +79,35 @@ export default function Step1PersonalData({
           <Input
             id="phone"
             value={formData.phone}
-            onChange={(e) => updateFormData({ phone: e.target.value })}
+            onChange={(e) => {
+              const formatted = formatPhone(e.target.value)
+              updateFormData({ phone: formatted })
+            }}
             placeholder="(11) 99999-9999"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="password">Crie uma senha? *</Label>
+          <div className="mb-2"></div>
+          <Input
+            id="password"
+            type="password"
+            value={formData.password}
+            onChange={(e) => updateFormData({ password: e.target.value })}
+            placeholder="Digite sua senha"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="confirm-password">Confirme a senha senha? *</Label>
+          <div className="mb-2"></div>
+          <Input
+            id="confirm-password"
+            type="password"
+            value={formData.confirmPassword}
+            onChange={(e) => updateFormData({ confirmPassword: e.target.value })}
+            placeholder="Digite sua senha novamente"
           />
         </div>
 
@@ -117,7 +159,7 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="city">De onde você joga sua vida? *</Label>
+          <Label htmlFor="city">Onde você mora/reside? *</Label>
           <div className="mb-2"></div>
           <Input
             id="location"

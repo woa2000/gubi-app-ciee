@@ -16,15 +16,32 @@ export default function Step6Challenges({
   updateFormData,
 }: Props) {
   const difficultyOptions = [
-    "Organização",
-    "Entendimento",
-    "Ansiedade",
-    "Carreira",
-    "Estrutura de estudo",
-    "Nenhuma",
+    { id: "organizacao",          label: "Organização" },
+    { id: "entendimento",         label: "Entendimento" },
+    { id: "ansiedade",            label: "Ansiedade" },
+    { id: "carreira",             label: "Carreira" },
+    { id: "estrutura_de_estudo",  label: "Estrutura de estudo" },
+    { id: "nenhuma",              label: "Nenhuma" },
   ];
 
-  const deviceOptions = ["Celular", "Computador", "Tablet", "Nenhum"];
+  const deviceOptions = [
+    { id: "celular",    label: "Celular" },
+    { id: "computador", label: "Computador" },
+    { id: "tablet",     label: "Tablet" },
+    { id: "nenhum",     label: "Nenhum" }
+  ];
+
+  const thoughtOptions = [
+    { id: "sim", label: "Sim" },
+    { id: "nao", label: "Não" },
+    { id: "prefiro_nao_responder", label: "Prefiro não responder", },
+  ];
+
+  const internetOptions = [
+    { id: "wifi", label: "Wi-Fi" },
+    { id: "so_celular", label: "Só celular" },
+    { id: "sem_acesso_confiavel", label: "Sem acesso confiável", },
+  ];
 
   const handleCheckbox = (
     field: keyof RegisterForm,
@@ -37,26 +54,6 @@ export default function Step6Challenges({
       : current.filter(v => v !== value);
     updateFormData({ [field]: updated } as Partial<RegisterForm>);
   };
-
-  const thoughtOptions = [
-    { id: "sim-desistir", value: "sim", label: "Sim" },
-    { id: "nao-desistir", value: "nao", label: "Não" },
-    {
-      id: "prefiro-nao-responder-desistir",
-      value: "prefiro-nao-responder",
-      label: "Prefiro não responder",
-    },
-  ];
-
-  const internetOptions = [
-    { id: "wifi", value: "wifi", label: "Wi-Fi" },
-    { id: "so-celular", value: "so-celular", label: "Só celular" },
-    {
-      id: "sem-acesso-confiavel",
-      value: "sem-acesso-confiavel",
-      label: "Sem acesso confiável",
-    },
-  ];
 
   return (
     <div className="space-y-6">
@@ -77,16 +74,16 @@ export default function Step6Challenges({
         </Label>
         <div className="grid grid-cols-2 gap-3 mt-3">
           {difficultyOptions.map(opt => (
-            <div key={opt} className="flex items-center space-x-2">
+            <div key={`difficulty-${opt.id}`} className="flex items-center space-x-2">
               <Checkbox
-                id={`difficulty-${opt}`}
-                checked={formData.currentDifficulties?.includes(opt)}
+                id={`difficulty-${opt.id}`}
+                checked={formData.currentDifficulties?.includes(opt.id)}
                 onCheckedChange={checked =>
-                  handleCheckbox("currentDifficulties", opt, checked as boolean)
+                  handleCheckbox("currentDifficulties", opt.id, checked as boolean)
                 }
               />
-              <Label htmlFor={`difficulty-${opt}`} className="text-sm">
-                {opt}
+              <Label htmlFor={`difficulty-${opt.id}`} className="text-sm">
+                {opt.label}
               </Label>
             </div>
           ))}
@@ -107,8 +104,8 @@ export default function Step6Challenges({
         >
           {thoughtOptions.map(opt => (
             <div key={opt.id} className="flex items-center space-x-2">
-              <RadioGroupItem value={opt.value} id={opt.id} />
-              <Label htmlFor={opt.id}>{opt.label}</Label>
+              <RadioGroupItem value={opt.id} id={`${opt.id}-thought`} />
+              <Label htmlFor={`${opt.id}-thought`}>{opt.label}</Label>
             </div>
           ))}
         </RadioGroup>
@@ -126,8 +123,8 @@ export default function Step6Challenges({
         >
           {internetOptions.map(opt => (
             <div key={opt.id} className="flex items-center space-x-2">
-              <RadioGroupItem value={opt.value} id={opt.id} />
-              <Label htmlFor={opt.id}>{opt.label}</Label>
+              <RadioGroupItem value={opt.id} id={`${opt.id}-internet`} />
+              <Label htmlFor={`${opt.id}-internet`}>{opt.label}</Label>
             </div>
           ))}
         </RadioGroup>
@@ -140,16 +137,16 @@ export default function Step6Challenges({
         </Label>
         <div className="grid grid-cols-2 gap-3 mt-3">
           {deviceOptions.map(opt => (
-            <div key={opt} className="flex items-center space-x-2">
+            <div key={`device-${opt.id}`} className="flex items-center space-x-2">
               <Checkbox
-                id={`device-${opt}`}
-                checked={formData.availableDevices?.includes(opt)}
+                id={`device-${opt.id}`}
+                checked={formData.availableDevices?.includes(opt.id)}
                 onCheckedChange={checked =>
-                  handleCheckbox("availableDevices", opt, checked as boolean)
+                  handleCheckbox("availableDevices", opt.id, checked as boolean)
                 }
               />
-              <Label htmlFor={`device-${opt}`} className="text-sm">
-                {opt}
+              <Label htmlFor={`device-${opt.id}`} className="text-sm">
+                {opt.label}
               </Label>
             </div>
           ))}

@@ -27,6 +27,55 @@ export default function Step3Education({
     "duvida-faculdade"
   ].includes(formData.wantsFaculty);
 
+  const gradeOptions = [
+    { id: "o6_ano",                 label: "6º ano do Ensino Fundamental" },
+    { id: "o7_ano",                 label: "7º ano do Ensino Fundamental" },
+    { id: "o8_ano",                 label: "8º ano do Ensino Fundamental" },
+    { id: "o9_ano",                 label: "9º ano do Ensino Fundamental" },
+    { id: "o1-ano_medio",           label: "1º ano do Ensino Médio" },
+    { id: "o2-ano_medio",           label: "2º ano do Ensino Médio" },
+    { id: "o3-ano_medio",           label: "3º ano do Ensino Médio" },
+    { id: "ensino_medio-concluido", label: "Ensino Médio concluído" },
+    { id: "curso_tecnico",          label: "Cursando técnico" },
+    { id: "tecnico_concluido",      label: "Curso técnico concluído" },
+    { id: "cursando_superior",      label: "Cursando faculdade" },
+    { id: "superior_incompleto",    label: "Faculdade incompleta" },
+    { id: "superior_concluido",     label: "Faculdade concluída" },
+    { id: "pos_graduacao",          label: "Pós-graduação" },
+    { id: "outro",                  label: "Outro" }
+  ];
+
+  const wantsFacultyOptions = [
+    { id: "pretendo_fazer",   label: "Pretendo fazer faculdade" },
+    { id: "cursando",         label: "Estou cursando faculdade" },
+    { id: "ja_concluida",     label: "Já concluí a faculdade" },
+    { id: "nao_pretendo",     label: "Não pretendo fazer" },
+    { id: "duvida_faculdade", label: "Ainda estou em dúvida" },
+  ];
+
+  const studyFormatOptions = [
+    { id: "online",     label: "Online" },
+    { id: "hibrido",    label: "Híbrido" },
+    { id: "presencial", label: "Presencial" },
+  ];
+
+  const inFacultyNeedsFinancialSupportOptions = [
+    { id: "sim_financiamento",  label: "Sim, preciso de financiamento ou bolsa", },
+    { id: "nao_preciso",        label: "Não, consigo pagar sem ajuda", }
+  ];
+
+  const needsFinancialSupportOptions = [
+    { id: "sim_financiamento",  label: "Sim, preciso de financiamento ou bolsa", },
+    { id: "sim_nao_sei",        label: "Sim, mas ainda não sei como conseguir", },
+    { id: "nao_preciso",        label: "Não, consigo pagar sem ajuda", },
+    { id: "nao_pensei",         label: "Ainda não pensei sobre isso", },
+  ];
+
+  const wantsFinancialInfoOptions = [
+    { id: "sim", label: "Sim, quero receber informações" },
+    { id: "nao", label: "Não, não quero receber" },
+  ];
+
   return (
     <div className="space-y-6">
       {/* Cabeçalho */}
@@ -48,21 +97,9 @@ export default function Step3Education({
             <SelectValue placeholder="Selecione sua situação atual" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="6o-ano">6º ano do Ensino Fundamental</SelectItem>
-            <SelectItem value="7o-ano">7º ano do Ensino Fundamental</SelectItem>
-            <SelectItem value="8o-ano">8º ano do Ensino Fundamental</SelectItem>
-            <SelectItem value="9o-ano">9º ano do Ensino Fundamental</SelectItem>
-            <SelectItem value="1o-ano-medio">1º ano do Ensino Médio</SelectItem>
-            <SelectItem value="2o-ano-medio">2º ano do Ensino Médio</SelectItem>
-            <SelectItem value="3o-ano-medio">3º ano do Ensino Médio</SelectItem>
-            <SelectItem value="ensino-medio-concluido">Ensino Médio concluído</SelectItem>
-            <SelectItem value="curso-tecnico">Cursando técnico</SelectItem>
-            <SelectItem value="tecnico-concluido">Curso técnico concluído</SelectItem>
-            <SelectItem value="cursando-superior">Cursando faculdade</SelectItem>
-            <SelectItem value="superior-incompleto">Faculdade incompleta</SelectItem>
-            <SelectItem value="superior-concluido">Faculdade concluída</SelectItem>
-            <SelectItem value="pos-graduacao">Pós-graduação</SelectItem>
-            <SelectItem value="outro">Outro</SelectItem>
+            {gradeOptions.map(opt => (
+              <SelectItem key={opt.id} value={opt.id}>{opt.label}</SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
@@ -79,13 +116,7 @@ export default function Step3Education({
           }
           className="mt-2 space-y-2"
         >
-          {[
-            { id: "pretendo-fazer", label: "Pretendo fazer faculdade" },
-            { id: "cursando", label: "Estou cursando faculdade" },
-            { id: "ja-concluida", label: "Já concluí a faculdade" },
-            { id: "nao-pretendo", label: "Não pretendo fazer" },
-            { id: "duvida-faculdade", label: "Ainda estou em dúvida" },
-          ].map(opt => (
+          {wantsFacultyOptions.map(opt => (
             <div key={opt.id} className="flex items-center space-x-2">
               <RadioGroupItem value={opt.id} id={opt.id} />
               <Label htmlFor={opt.id}>{opt.label}</Label>
@@ -139,11 +170,7 @@ export default function Step3Education({
           }
           className="mt-2 space-y-2"
         >
-          {[
-            { id: "presencial", label: "Presencial" },
-            { id: "ead", label: "EAD" },
-            { id: "hibrido", label: "Híbrido" },
-          ].map(opt => (
+          {studyFormatOptions.map(opt => (
             <div key={opt.id} className="flex items-center space-x-2">
               <RadioGroupItem value={opt.id} id={opt.id} />
               <Label htmlFor={opt.id}>{opt.label}</Label>
@@ -172,52 +199,17 @@ export default function Step3Education({
         >
           {(
             formData.wantsFaculty === "cursando"
-              ? [
-                {
-                  id: "sim-financiamento",
-                  label: "Sim, preciso de financiamento ou bolsa",
-                },
-                {
-                  id: "nao-preciso",
-                  label: "Não, consigo pagar sem ajuda",
-                }
-              ]
+              ? inFacultyNeedsFinancialSupportOptions
               : formData.wantsFaculty === "ja-concluida"
-                ? [
-                  {
-                    id: "sim-financiamento",
-                    label: "Sim, precisei de financiamento ou bolsa",
-                  },
-                  {
-                    id: "nao-preciso",
-                    label: "Não, consegui pagar sem ajuda",
-                  }
-                ]
-                : [
-                  {
-                    id: "sim-financiamento",
-                    label: "Sim, preciso de financiamento ou bolsa",
-                  },
-                  {
-                    id: "sim-nao-sei",
-                    label: "Sim, mas ainda não sei como conseguir",
-                  },
-                  {
-                    id: "nao-preciso",
-                    label: "Não, consigo pagar sem ajuda",
-                  },
-                  {
-                    id: "nao-pensei",
-                    label: "Ainda não pensei sobre isso",
-                  },
-                ]
+                ? inFacultyNeedsFinancialSupportOptions
+                : needsFinancialSupportOptions
           ).map(opt => (
             <div
               key={opt.id}
               className="flex items-center space-x-2"
             >
-              <RadioGroupItem value={opt.id} id={opt.id} />
-              <Label htmlFor={opt.id}>{opt.label}</Label>
+              <RadioGroupItem value={opt.id} id={`${opt.id}-needs-financial-support`}/>
+              <Label htmlFor={`${opt.id}-needs-financial-support`}>{opt.label}</Label>
             </div>
           ))}
         </RadioGroup>
@@ -234,16 +226,13 @@ export default function Step3Education({
           }
           className="mt-2 space-y-2"
         >
-          {[
-            { id: "sim-info", label: "Sim" },
-            { id: "nao-info", label: "Não" },
-          ].map(opt => (
+          {wantsFinancialInfoOptions.map(opt => (
             <div
               key={opt.id}
               className="flex items-center space-x-2"
             >
-              <RadioGroupItem value={opt.id} id={opt.id} />
-              <Label htmlFor={opt.id}>{opt.label}</Label>
+              <RadioGroupItem value={opt.id} id={`${opt.id}-info`} />
+              <Label htmlFor={`${opt.id}-info`}>{opt.label}</Label>
             </div>
           ))}
         </RadioGroup>

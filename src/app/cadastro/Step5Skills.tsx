@@ -27,27 +27,26 @@ export default function Step5Skills({
     { id: "criatividade", label: "Criatividade" },
     { id: "persistencia", label: "Persistência" },
     { id: "organizacao", label: "Organização" },
-    { id: "trabalho-equipe", label: "Trabalho em equipe" },
+    { id: "trabalho_equipe", label: "Trabalho em equipe" },
     { id: "empatia", label: "Empatia" },
     { id: "lideranca", label: "Liderança" },
     { id: "flexibilidade", label: "Flexibilidade" },
-    { id: "resolucao-problemas", label: "Resolução de problemas" },
-    { id: "inteligencia-emocional", label: "Inteligência emocional" }
+    { id: "resolucao_problemas", label: "Resolução de problemas" },
+    { id: "inteligencia_emocional", label: "Inteligência emocional" }
   ];
 
   const hardSkillOptions = [
     { id: "excel", label: "Excel" },
-    { id: "power-bi", label: "Power BI" },
+    { id: "power_bi", label: "Power BI" },
     { id: "canva", label: "Canva" }, 
     { id: "python", label: "Python" },
-    { id: "banco-dados", label: "Banco de dados" },
-    { id: "atendimento-cliente", label: "Atendimento ao cliente" },
-    { id: "criacao-conteudo", label: "Criação de conteúdo" },
+    { id: "banco_dados", label: "Banco de dados" },
+    { id: "atendimento_cliente", label: "Atendimento ao cliente" },
+    { id: "criacao_conteudo", label: "Criação de conteúdo" },
     { id: "vendas", label: "Vendas" },
-    { id: "design-grafico", label: "Design gráfico" },
+    { id: "design_grafico", label: "Design gráfico" },
     { id: "nenhuma", label: "Nenhuma" }
   ];
-
 
   const learningPrefs = [
     { id: "aulas-praticas", label: "Aulas práticas" },
@@ -168,7 +167,7 @@ export default function Step5Skills({
       {/* Hard Skills */}
       <div>
         <Label className="text-base font-medium">
-          Hard Skills/Ferramentas conhecidas:
+          Quais habilidades técnicas você possui conhecimento? *
         </Label>
         <div className="grid grid-cols-2 gap-3 mt-3">
           {hardSkillOptions.map(skill => (

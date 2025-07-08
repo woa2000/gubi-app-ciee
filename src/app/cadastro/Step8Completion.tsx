@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RegisterForm } from "@/types/user";
 
@@ -17,11 +17,11 @@ export default function Step8Completion({
   updateFormData,
 }: Props) {
   const howFoundOptions = [
-    { id: "escola", value: "escola", label: "Escola" },
-    { id: "professor", value: "professor", label: "Professor" },
-    { id: "instagram", value: "instagram", label: "Instagram" },
-    { id: "indicacao", value: "indicacao", label: "Indicação" },
-    { id: "outro-fonte", value: "outro", label: "Outro" },
+    { id: "escola", label: "Escola" },
+    { id: "professor", label: "Professor" },
+    { id: "instagram", label: "Instagram" },
+    { id: "indicacao", label: "Indicação" },
+    { id: "outro", label: "Outro" },
   ];
 
   return (
@@ -34,22 +34,6 @@ export default function Step8Completion({
         <p className="text-gray-600">
           Últimas informações para começarmos sua jornada!
         </p>
-      </div>
-
-      {/* Motivação */}
-      <div>
-        <Label htmlFor="motivation" className="text-base font-medium">
-          O que mais te motiva? *
-        </Label>
-        <Textarea
-          id="motivation"
-          value={formData.motivation}
-          onChange={(e) =>
-            updateFormData({ motivation: e.target.value })
-          }
-          placeholder="Conte-nos o que te motiva a seguir em frente..."
-          className="mt-2 min-h-[100px]"
-        />
       </div>
 
       {/* Como conheceu */}
@@ -66,8 +50,8 @@ export default function Step8Completion({
         >
           {howFoundOptions.map(opt => (
             <div key={opt.id} className="flex items-center space-x-2">
-              <RadioGroupItem value={opt.value} id={opt.id} />
-              <Label htmlFor={opt.id}>{opt.label}</Label>
+              <RadioGroupItem value={opt.id} id={`howFoundUs-${opt.id}`} />
+              <Label htmlFor={`howFoundUs-${opt.id}`}>{opt.label}</Label>
             </div>
           ))}
         </RadioGroup>
@@ -86,16 +70,29 @@ export default function Step8Completion({
             }
             className="mt-1"
           />
-          <Label htmlFor="acceptsTerms" className="text-sm leading-relaxed">
-            Li e aceito os{" "}
-            <a href="#" className="text-blue-600 hover:underline">
+          <Label
+            htmlFor="acceptsTerms"
+            className="text-sm leading-relaxed flex flex-wrap gap-x-1"
+          >
+            <span>Li e aceito os</span>
+            <Link
+              href="/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
               termos de uso
-            </a>{" "}
-            e{" "}
-            <a href="#" className="text-blue-600 hover:underline">
+            </Link>
+            <span>e</span>
+            <Link
+              href="/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
               política de privacidade
-            </a>
-            .
+            </Link>
+            <span>.</span>
           </Label>
         </div>
 

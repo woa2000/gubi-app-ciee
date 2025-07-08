@@ -16,9 +16,9 @@ export default function Step7Socioeconomic({
   updateFormData,
 }: Props) {
   const socialProgramOptions = [
-    { id: "sim-programa", value: "sim", label: "Sim" },
-    { id: "nao-programa", value: "nao", label: "Não" },
-    { id: "nao-sei-programa", value: "nao-sei", label: "Não sei" },
+    { id: "sim", label: "Sim" },
+    { id: "nao", label: "Não" },
+    { id: "nao-sei", label: "Não sei" },
   ];
 
   return (
@@ -47,8 +47,8 @@ export default function Step7Socioeconomic({
         >
           {socialProgramOptions.map(opt => (
             <div key={opt.id} className="flex items-center space-x-2">
-              <RadioGroupItem value={opt.value} id={opt.id} />
-              <Label htmlFor={opt.id}>{opt.label}</Label>
+              <RadioGroupItem value={opt.id} id={`participates-social-program-${opt.id}`} />
+              <Label htmlFor={`participates-social-program-${opt.id}`}>{opt.label}</Label>
             </div>
           ))}
         </RadioGroup>
