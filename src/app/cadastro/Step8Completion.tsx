@@ -58,7 +58,7 @@ export default function Step8Completion({
         </RadioGroup>
         {formData.howFoundUs == "outro" && (
           <Input
-            id="customInterest"
+            id="customHowFoundUs"
             value={formData.customHowFoundUs}
             onChange={(e) =>
               updateFormData({ customHowFoundUs: e.target.value })
