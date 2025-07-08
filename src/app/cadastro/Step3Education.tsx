@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
@@ -28,47 +28,90 @@ export default function Step3Education({
   ].includes(formData.wantsFaculty);
 
   const gradeOptions = [
-    { id: "o6_ano",                 label: "6º ano do Ensino Fundamental" },
-    { id: "o7_ano",                 label: "7º ano do Ensino Fundamental" },
-    { id: "o8_ano",                 label: "8º ano do Ensino Fundamental" },
-    { id: "o9_ano",                 label: "9º ano do Ensino Fundamental" },
-    { id: "o1-ano_medio",           label: "1º ano do Ensino Médio" },
-    { id: "o2-ano_medio",           label: "2º ano do Ensino Médio" },
-    { id: "o3-ano_medio",           label: "3º ano do Ensino Médio" },
+    { id: "o6_ano", label: "6º ano do Ensino Fundamental" },
+    { id: "o7_ano", label: "7º ano do Ensino Fundamental" },
+    { id: "o8_ano", label: "8º ano do Ensino Fundamental" },
+    { id: "o9_ano", label: "9º ano do Ensino Fundamental" },
+    { id: "o1-ano_medio", label: "1º ano do Ensino Médio" },
+    { id: "o2-ano_medio", label: "2º ano do Ensino Médio" },
+    { id: "o3-ano_medio", label: "3º ano do Ensino Médio" },
     { id: "ensino_medio-concluido", label: "Ensino Médio concluído" },
-    { id: "curso_tecnico",          label: "Cursando técnico" },
-    { id: "tecnico_concluido",      label: "Curso técnico concluído" },
-    { id: "cursando_superior",      label: "Cursando superior" },
-    { id: "superior_incompleto",    label: "Superior incompleta" },
-    { id: "superior_concluido",     label: "Superior concluído" },
-    { id: "pos_graduacao",          label: "Pós-graduação" },
-    { id: "outro",                  label: "Outro" }
+    { id: "curso_tecnico", label: "Cursando técnico" },
+    { id: "tecnico_concluido", label: "Curso técnico concluído" },
+    { id: "cursando_superior", label: "Cursando superior" },
+    { id: "superior_incompleto", label: "Superior incompleta" },
+    { id: "superior_concluido", label: "Superior concluído" },
+    { id: "pos_graduacao", label: "Pós-graduação" },
+    { id: "outro", label: "Outro" }
   ];
 
   const wantsFacultyOptions = [
-    { id: "pretendo_fazer",   label: "Pretendo fazer faculdade" },
-    { id: "cursando",         label: "Estou cursando faculdade" },
-    { id: "ja_concluida",     label: "Já concluí a faculdade" },
-    { id: "nao_pretendo",     label: "Não pretendo fazer" },
+    { id: "pretendo_fazer", label: "Pretendo fazer faculdade" },
+    { id: "cursando", label: "Estou cursando faculdade" },
+    { id: "ja_concluida", label: "Já concluí a faculdade" },
+    { id: "nao_pretendo", label: "Não pretendo fazer" },
     { id: "duvida_faculdade", label: "Ainda estou em dúvida" },
   ];
 
+  const shouldShowSchoolField = [
+    "o6_ano",
+    "o7_ano",
+    "o8_ano",
+    "o9_ano",
+    "o1-ano_medio",
+    "o2-ano_medio",
+    "o3-ano_medio"
+  ].includes(formData.grade);
+
+  const filteredWantsFacultyOptions = [
+    "o6_ano",
+    "o7_ano",
+    "o8_ano",
+    "o9_ano",
+    "o1-ano_medio",
+    "o2-ano_medio",
+    "o3-ano_medio"
+  ].includes(formData.grade)
+    ? wantsFacultyOptions.filter(
+      (opt) => opt.id !== "cursando" && opt.id !== "ja_concluida"
+    )
+    : wantsFacultyOptions;
+
+  const autoFacultyMap: Record<string, "cursando" | "ja_concluida" | null> = {
+    cursando_superior: "cursando",
+    superior_incompleto: "cursando",
+    curso_tecnico: "cursando",
+    superior_concluido: "ja_concluida",
+    pos_graduacao: "ja_concluida",
+    tecnico_concluido: "ja_concluida",
+  };
+
+
+  const autoFacultyValue = autoFacultyMap[formData.grade] ?? null;
+  const shouldDisableFacultySelection = !!autoFacultyValue;
+
+  useEffect(() => {
+    if (autoFacultyValue && formData.wantsFaculty !== autoFacultyValue) {
+      updateFormData({ wantsFaculty: autoFacultyValue });
+    }
+  }, [formData.grade]);
+
   const studyFormatOptions = [
-    { id: "online",     label: "Online" },
-    { id: "hibrido",    label: "Híbrido" },
+    { id: "online", label: "Online" },
+    { id: "hibrido", label: "Híbrido" },
     { id: "presencial", label: "Presencial" },
   ];
 
   const inFacultyNeedsFinancialSupportOptions = [
-    { id: "sim_financiamento",  label: "Sim, preciso de financiamento ou bolsa", },
-    { id: "nao_preciso",        label: "Não, consigo pagar sem ajuda", }
+    { id: "sim_financiamento", label: "Sim, preciso de financiamento ou bolsa", },
+    { id: "nao_preciso", label: "Não, consigo pagar sem ajuda", }
   ];
 
   const needsFinancialSupportOptions = [
-    { id: "sim_financiamento",  label: "Sim, preciso de financiamento ou bolsa", },
-    { id: "sim_nao_sei",        label: "Sim, mas ainda não sei como conseguir", },
-    { id: "nao_preciso",        label: "Não, consigo pagar sem ajuda", },
-    { id: "nao_pensei",         label: "Ainda não pensei sobre isso", },
+    { id: "sim_financiamento", label: "Sim, preciso de financiamento ou bolsa", },
+    { id: "sim_nao_sei", label: "Sim, mas ainda não sei como conseguir", },
+    { id: "nao_preciso", label: "Não, consigo pagar sem ajuda", },
+    { id: "nao_pensei", label: "Ainda não pensei sobre isso", },
   ];
 
   const wantsFinancialInfoOptions = [
@@ -104,42 +147,23 @@ export default function Step3Education({
         </Select>
       </div>
 
-      {/* Situação com o ensino superior */}
-      <div>
-        <Label className="text-base font-medium">
-          Qual sua situação com o ensino superior? *
-        </Label>
-        <RadioGroup
-          value={formData.wantsFaculty}
-          onValueChange={(value) =>
-            updateFormData({ wantsFaculty: value })
-          }
-          className="mt-2 space-y-2"
-        >
-          {wantsFacultyOptions.map(opt => (
-            <div key={opt.id} className="flex items-center space-x-2">
-              <RadioGroupItem value={opt.id} id={opt.id} />
-              <Label htmlFor={opt.id}>{opt.label}</Label>
-            </div>
-          ))}
-        </RadioGroup>
-      </div>
-
       {/* Instituição Atual */}
-      <div>
-        <Label htmlFor="current-institution">
-          Se você ainda estuda, qual o nome da instituição?
-        </Label>
-        <Input
-          id="current-institution"
-          value={formData.currentInstitution}
-          onChange={(e) =>
-            updateFormData({ currentInstitution: e.target.value })
-          }
-          placeholder={"Nome da sua instituição (opcional)"}
-          className="mt-2"
-        />
-      </div>
+      {shouldShowSchoolField && (
+        <div>
+          <Label htmlFor="current-institution">
+            Qual o nome da sua escola? (Não abreviar) *
+          </Label>
+          <Input
+            id="current-institution"
+            value={formData.currentInstitution}
+            onChange={(e) =>
+              updateFormData({ currentInstitution: e.target.value })
+            }
+            placeholder={"Digite o nome da sua escola"}
+            className="mt-2"
+          />
+        </div>
+      )}
 
       {/* Instituição Pretendida */}
       {isHighSchool && (<div>
@@ -179,6 +203,45 @@ export default function Step3Education({
         </RadioGroup>
       </div>
 
+      {/* Situação com o ensino superior */}
+      {!shouldDisableFacultySelection && (
+        <div>
+          {shouldDisableFacultySelection ? (
+            <div className="text-gray-400 text-base font-medium mb-1">
+              Situação com o ensino superior (preenchido automaticamente)
+            </div>
+          ) : (
+            <Label className="text-base font-medium">
+              Qual sua situação com o ensino superior? *
+            </Label>
+          )}
+
+          <RadioGroup
+            value={formData.wantsFaculty}
+            onValueChange={(value) =>
+              !shouldDisableFacultySelection && updateFormData({ wantsFaculty: value })
+            }
+            className="mt-2 space-y-2"
+          >
+            {filteredWantsFacultyOptions.map(opt => (
+              <div key={opt.id} className="flex items-center space-x-2">
+                <RadioGroupItem
+                  value={opt.id}
+                  id={opt.id}
+                  disabled={shouldDisableFacultySelection}
+                />
+                <Label
+                  htmlFor={opt.id}
+                  className={shouldDisableFacultySelection ? "text-gray-400" : ""}
+                >
+                  {opt.label}
+                </Label>
+              </div>
+            ))}
+          </RadioGroup>
+        </div>
+      )}
+
       {/* Apoio financeiro e info sobre bolsas */}
       <div>
         <Label className="text-base font-medium">
@@ -208,7 +271,7 @@ export default function Step3Education({
               key={opt.id}
               className="flex items-center space-x-2"
             >
-              <RadioGroupItem value={opt.id} id={`${opt.id}-needs-financial-support`}/>
+              <RadioGroupItem value={opt.id} id={`${opt.id}-needs-financial-support`} />
               <Label htmlFor={`${opt.id}-needs-financial-support`}>{opt.label}</Label>
             </div>
           ))}

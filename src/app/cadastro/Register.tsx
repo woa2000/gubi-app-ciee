@@ -86,6 +86,16 @@ export default function Register() {
 
     const updateFormData = (updates: Partial<RegisterForm>) => setFormData(prev => ({ ...prev, ...updates }));
 
+    const shouldShowSchoolField = [
+        "o6_ano",
+        "o7_ano",
+        "o8_ano",
+        "o9_ano",
+        "o1-ano_medio",
+        "o2-ano_medio",
+        "o3-ano_medio"
+    ].includes(formData.grade);
+
     const validateStep = (step: number): boolean => {
         switch (step) {
             case 1:
@@ -96,7 +106,7 @@ export default function Register() {
                 return !!(formData.userInterests.length > 0 && formData.workPreference &&
                     formData.workEnvironment && formData.companyType && formData.userSkills.length > 0);
             case 3:
-                return !!(formData.grade && formData.wantsFaculty && formData.studyFormat &&
+                return !!(formData.grade && (shouldShowSchoolField && formData.currentInstitution) && formData.wantsFaculty && formData.studyFormat &&
                     formData.needsFinancialSupport && formData.wantsFinancialInfo);
             case 4:
                 return !!(formData.twoYearGoals.length > 0 && formData.workWhileStudying &&
