@@ -148,7 +148,7 @@ export default function Step3Education({
       <div>
         <Label htmlFor="grade">Situação educacional *</Label>
         <div className="mb-2"></div>
-        <Select value={formData.grade} onValueChange={(value) => updateFormData({ grade: value })}>
+        <Select value={formData.grade} onValueChange={(value) => updateFormData({ grade: value, needsFinancialSupport: "" })}>
           <SelectTrigger>
             <SelectValue placeholder="Selecione sua situação atual" />
           </SelectTrigger>
@@ -257,40 +257,43 @@ export default function Step3Education({
 
       {/* Apoio financeiro e info sobre bolsas */}
       {!shouldSetSupportAsConcluded && (
-      <div>
-        <Label className="text-base font-medium">
-          {formData.wantsFaculty === "cursando"
-            ? "Você precisa de apoio financeiro para fazer faculdade? *"
-            : formData.wantsFaculty === "ja-concluida"
-              ? "Você precisou de apoio financeiro para fazer faculdade? *"
-              : formData.wantsFaculty === "nao-pretendo"
-                ? "Você precisaria de apoio financeiro para fazer faculdade? *"
-                : "Você precisará de apoio financeiro para fazer faculdade? *"}
-        </Label>
-        <RadioGroup
-          value={formData.needsFinancialSupport}
-          onValueChange={(value) =>
-            updateFormData({ needsFinancialSupport: value })
-          }
-          className="mt-2 space-y-2"
-        >
-          {(
-            formData.wantsFaculty === "cursando"
-              ? inFacultyNeedsFinancialSupportOptions
+        <div>
+          <Label className="text-base font-medium">
+            {formData.wantsFaculty === "cursando"
+              ? "Você precisa de apoio financeiro para fazer faculdade? *"
               : formData.wantsFaculty === "ja-concluida"
+                ? "Você precisou de apoio financeiro para fazer faculdade? *"
+                : formData.wantsFaculty === "nao-pretendo"
+                  ? "Você precisaria de apoio financeiro para fazer faculdade? *"
+                  : "Você precisará de apoio financeiro para fazer faculdade? *"}
+          </Label>
+          <RadioGroup
+            value={formData.needsFinancialSupport}
+            onValueChange={(value) =>
+              updateFormData({ needsFinancialSupport: value })
+            }
+            className="mt-2 space-y-2"
+          >
+            {(
+              formData.wantsFaculty === "cursando"
                 ? inFacultyNeedsFinancialSupportOptions
-                : needsFinancialSupportOptions
-          ).map(opt => (
-            <div
-              key={opt.id}
-              className="flex items-center space-x-2"
-            >
-              <RadioGroupItem value={opt.id} id={`${opt.id}-needs-financial-support`} />
-              <Label htmlFor={`${opt.id}-needs-financial-support`}>{opt.label}</Label>
-            </div>
-          ))}
-        </RadioGroup>
-      </div>
+                : formData.wantsFaculty === "ja-concluida"
+                  ? inFacultyNeedsFinancialSupportOptions
+                  : needsFinancialSupportOptions
+            ).map(opt => {
+              if (opt.id === "ja_concluida") return null;
+              return (
+                <div
+                  key={opt.id}
+                  className="flex items-center space-x-2"
+                >
+                  <RadioGroupItem value={opt.id} id={`${opt.id}-needs-financial-support`} />
+                  <Label htmlFor={`${opt.id}-needs-financial-support`}>{opt.label}</Label>
+                </div>
+              );
+            })}
+          </RadioGroup>
+        </div>
       )}
 
       <div>
