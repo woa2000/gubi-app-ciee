@@ -1,26 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
 import Image from "next/image";
 
 export default function TermsOfUse() {
-    const router = useRouter();
-    const [hasReferrer, setHasReferrer] = useState(false);
-
-    useEffect(() => {
-        if (document.referrer && new URL(document.referrer).origin === window.location.origin) {
-            setHasReferrer(true);
-        }
-    }, []);
-
-    const handleBack = () => {
-        if (hasReferrer) {
-            router.back();
-        } else {
-            router.push("/");
-        }
-    };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">

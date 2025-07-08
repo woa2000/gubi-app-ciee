@@ -2,13 +2,12 @@ import { getApiBaseUrl } from "@/lib/apiBase";
 import { RegisterForm } from "@/types/user";
 
 export async function registerUser(form: RegisterForm) {
-  const { confirmPassword, ...formFormatted } = form;
   const baseUrl = getApiBaseUrl();
 
   const response = await fetch(`${baseUrl}/v1/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formFormatted),
+    body: JSON.stringify(form),
   });
 
   const data = await response.json();

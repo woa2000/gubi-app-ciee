@@ -172,7 +172,7 @@ export default function Register() {
 
     const handleSubmit = async () => {
         try {
-            const response = await registerUser(formData);
+            await registerUser(formData);
             toast.success("Cadastro realizado com sucesso!", {
                 description: "Você está pronto para começar sua jornada!",
             });
