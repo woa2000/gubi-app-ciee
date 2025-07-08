@@ -21,6 +21,44 @@ export default function Step1PersonalData({
   formData,
   updateFormData,
 }: Props) {
+  const [city, setCity] = React.useState(formData.location.split(" - ")[0] || "");
+  const [state, setState] = React.useState(formData.location.split(" - ")[1] || "");
+
+  const states = [
+    { id: "AC", label: "Acre" },
+    { id: "AL", label: "Alagoas" },
+    { id: "AP", label: "Amapá" },
+    { id: "AM", label: "Amazonas" },
+    { id: "BA", label: "Bahia" },
+    { id: "CE", label: "Ceará" },
+    { id: "DF", label: "Distrito Federal" },
+    { id: "ES", label: "Espírito Santo" },
+    { id: "GO", label: "Goiás" },
+    { id: "MA", label: "Maranhão" },
+    { id: "MT", label: "Mato Grosso" },
+    { id: "MS", label: "Mato Grosso do Sul" },
+    { id: "MG", label: "Minas Gerais" },
+    { id: "PA", label: "Pará" },
+    { id: "PB", label: "Paraíba" },
+    { id: "PR", label: "Paraná" },
+    { id: "PE", label: "Pernambuco" },
+    { id: "PI", label: "Piauí" },
+    { id: "RJ", label: "Rio de Janeiro" },
+    { id: "RN", label: "Rio Grande do Norte" },
+    { id: "RS", label: "Rio Grande do Sul" },
+    { id: "RO", label: "Rondônia" },
+    { id: "RR", label: "Roraima" },
+    { id: "SC", label: "Santa Catarina" },
+    { id: "SP", label: "São Paulo" },
+    { id: "SE", label: "Sergipe" },
+    { id: "TO", label: "Tocantins" }
+  ];
+
+  const updateLocation = (newCity: string, newState: string) => {
+    const location = `${newCity.trim()} - ${newState.trim()}`;
+    updateFormData({ location });
+  };
+
   const formatPhone = (value: string) => {
     const digits = value.replace(/\D/g, "")
 
@@ -74,7 +112,7 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="phone">Se tiver, qual o seu número?</Label>
+          <Label htmlFor="phone">Se tiver WhatsApp, qual é o número?</Label>
           <div className="mb-2"></div>
           <Input
             id="phone"
@@ -100,7 +138,7 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="confirm-password">Confirme a senha senha? *</Label>
+          <Label htmlFor="confirm-password">Confirme a senha? *</Label>
           <div className="mb-2"></div>
           <Input
             id="confirm-password"
@@ -125,7 +163,7 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="gender">Você se indentifica com que gênero? *</Label>
+          <Label htmlFor="gender">Você se identifica com que gênero? *</Label>
           <div className="mb-2"></div>
           <Select
             value={formData.gender}
@@ -159,15 +197,43 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="city">Onde você mora/reside? *</Label>
+          <Label htmlFor="city">Qual sua cidade? *</Label>
           <div className="mb-2"></div>
           <Input
-            id="location"
-            value={formData.location}
-            onChange={(e) => updateFormData({ location: e.target.value })}
-            placeholder="Sua cidade e estado"
+            id="city"
+            value={city}
+            onChange={(e) => {
+              const newCity = e.target.value;
+              setCity(newCity);
+              updateLocation(newCity, state);
+            }}
+            placeholder="Digite sua cidade"
           />
         </div>
+
+        <div>
+          <Label htmlFor="state">Qual seu estado? *</Label>
+          <div className="mb-2"></div>
+          <Select
+            value={state}
+            onValueChange={(value) => {
+              setState(value);
+              updateLocation(city, value);
+            }}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Selecione seu estado" />
+            </SelectTrigger>
+            <SelectContent>
+              {states.map((opt) => (
+                <SelectItem key={opt.id} value={opt.id}>
+                  {opt.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
       </div>
     </div>
   );

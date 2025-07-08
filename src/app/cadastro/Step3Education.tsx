@@ -38,9 +38,9 @@ export default function Step3Education({
     { id: "ensino_medio-concluido", label: "Ensino Médio concluído" },
     { id: "curso_tecnico",          label: "Cursando técnico" },
     { id: "tecnico_concluido",      label: "Curso técnico concluído" },
-    { id: "cursando_superior",      label: "Cursando faculdade" },
-    { id: "superior_incompleto",    label: "Faculdade incompleta" },
-    { id: "superior_concluido",     label: "Faculdade concluída" },
+    { id: "cursando_superior",      label: "Cursando superior" },
+    { id: "superior_incompleto",    label: "Superior incompleta" },
+    { id: "superior_concluido",     label: "Superior concluído" },
     { id: "pos_graduacao",          label: "Pós-graduação" },
     { id: "outro",                  label: "Outro" }
   ];
@@ -128,7 +128,7 @@ export default function Step3Education({
       {/* Instituição Atual */}
       <div>
         <Label htmlFor="current-institution">
-          Se você ainda estuda, estuda em que instituição?
+          Se você ainda estuda, qual o nome da instituição?
         </Label>
         <Input
           id="current-institution"

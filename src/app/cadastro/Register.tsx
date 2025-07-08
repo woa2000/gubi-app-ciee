@@ -75,7 +75,7 @@ export default function Register() {
     const progress = (currentStep / totalSteps) * 100;
     const stepTitles = [
         "Quem é você no seu jogo?",
-        "Seu estilo e escolhas no jogo da vida",
+        "Quais são seus interesses profissionais?",
         "Seu futuro no game",
         "Missões e experiências na vida real",
         "Suas forças e desafios no jogo",
@@ -129,7 +129,11 @@ export default function Register() {
         }
     };
 
-    const isValidPhone = (phone: string): boolean => /^\(\d{2}\) \d{4,5}-\d{4}$/.test(phone)
+    const isValidPhone = (phone: string): boolean => {
+        if (phone.trim() === "") return true;
+        return /^\(\d{2}\) \d{4,5}-\d{4}$/.test(phone);
+    };
+
     const isValidEmail = (email: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.toLowerCase())
 
     const handleNext = () => {
@@ -137,7 +141,7 @@ export default function Register() {
             if (!formData.fullName || !formData.email || !formData.password || !formData.confirmPassword) {
                 toast.error("Campos obrigatórios", { description: "Preencha tudo antes de continuar." });
                 return;
-            }   
+            }
             if (!isValidEmail(formData.email)) {
                 toast.error("E-mail inválido", { description: "Por favor, insira um e-mail válido." });
                 return;
@@ -184,7 +188,7 @@ export default function Register() {
 
             if (error instanceof Error) errorMessage = error.message;
             else if (typeof error === "string") errorMessage = error;
-            
+
             toast.error("Erro ao registrar usuário", {
                 description: errorMessage,
             });

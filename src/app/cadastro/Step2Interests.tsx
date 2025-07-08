@@ -89,7 +89,7 @@ export default function Step2Interests({
     <div className="space-y-6">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-          Seu estilo e escolhas no jogo da vida
+          Quais são seus interesses profissionais?
         </h2>
         <p className="text-gray-600">
           Conte-nos sobre seus interesses e como gosta de trabalhar
