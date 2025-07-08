@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { RegisterForm } from "@/types/user";
 
 interface Props {
@@ -55,6 +56,17 @@ export default function Step8Completion({
             </div>
           ))}
         </RadioGroup>
+        {formData.howFoundUs == "outro" && (
+          <Input
+            id="customInterest"
+            value={formData.customHowFoundUs}
+            onChange={(e) =>
+              updateFormData({ customHowFoundUs: e.target.value })
+            }
+            placeholder="Especifique *"
+            className="mt-2 h-8"
+          />
+        )}
       </div>
 
       {/* Consentimento */}
