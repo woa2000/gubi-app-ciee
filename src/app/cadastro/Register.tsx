@@ -72,7 +72,7 @@ export default function Register() {
     });
 
     const totalSteps = 8;
-    const progress = (currentStep / totalSteps) * 100;
+    const progress = (currentStep / (totalSteps + 1)) * 100;
     const stepTitles = [
         "Quem é você no seu jogo?",
         "Quais são seus interesses profissionais?",
@@ -106,8 +106,8 @@ export default function Register() {
                 return !!(formData.userInterests.length > 0 && formData.workPreference &&
                     formData.workEnvironment && formData.companyType && formData.userSkills.length > 0);
             case 3:
-                return !!(formData.grade && (shouldShowSchoolField && formData.currentInstitution) && formData.wantsFaculty && formData.studyFormat &&
-                    formData.needsFinancialSupport && formData.wantsFinancialInfo);
+                return !!(formData.grade && (!shouldShowSchoolField || formData.currentInstitution) && formData.wantsFaculty &&
+                    formData.studyFormat && formData.needsFinancialSupport && formData.wantsFinancialInfo);
             case 4:
                 return !!(formData.twoYearGoals.length > 0 && formData.workWhileStudying &&
                     formData.hasInternshipExperience);

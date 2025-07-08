@@ -107,11 +107,24 @@ export default function Step3Education({
     { id: "nao_preciso", label: "Não, consigo pagar sem ajuda", }
   ];
 
+  const shouldSetSupportAsConcluded = [
+    "superior_concluido",
+    "pos_graduacao",
+    "tecnico_concluido"
+  ].includes(formData.grade);
+
+  useEffect(() => {
+    if (shouldSetSupportAsConcluded && formData.needsFinancialSupport !== "ja_concluida") {
+      updateFormData({ needsFinancialSupport: "ja_concluida" });
+    }
+  }, [formData.grade]);
+
   const needsFinancialSupportOptions = [
     { id: "sim_financiamento", label: "Sim, preciso de financiamento ou bolsa", },
     { id: "sim_nao_sei", label: "Sim, mas ainda não sei como conseguir", },
     { id: "nao_preciso", label: "Não, consigo pagar sem ajuda", },
     { id: "nao_pensei", label: "Ainda não pensei sobre isso", },
+    { id: "ja_concluida", label: "Já concluí a faculdade" },
   ];
 
   const wantsFinancialInfoOptions = [
@@ -243,6 +256,7 @@ export default function Step3Education({
       )}
 
       {/* Apoio financeiro e info sobre bolsas */}
+      {!shouldSetSupportAsConcluded && (
       <div>
         <Label className="text-base font-medium">
           {formData.wantsFaculty === "cursando"
@@ -277,6 +291,7 @@ export default function Step3Education({
           ))}
         </RadioGroup>
       </div>
+      )}
 
       <div>
         <Label className="text-base font-medium">
