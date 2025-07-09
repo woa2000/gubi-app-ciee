@@ -40,7 +40,7 @@ export default function Step4Success({ onFinish }: Props) {
                 </div>
 
                 <Button onClick={handleClick} className="w-full bg-green-600 hover:bg-green-700">
-                    Fazer Login
+                    🎮 Continuar sua jornada
                 </Button>
             </div>
         </div>
