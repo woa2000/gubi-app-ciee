@@ -50,7 +50,11 @@ export default function ForgotPassword() {
             setTimeLeft(300);
             setCanResend(false);
         } catch (err) {
-            toast.error("Erro ao enviar o código de recuperação. Tente novamente.");
+            const errorMessage =
+                err instanceof Error
+                    ? err.message
+                    : "Erro ao enviar o código. Tente novamente.";
+            toast.error(errorMessage);
         } finally {
             setIsLoading(false);
         }
@@ -64,7 +68,11 @@ export default function ForgotPassword() {
             await verifyRecoveryCode(email, code);
             setCurrentStep("newPassword");
         } catch (err) {
-            toast.error("Código inválido ou expirado. Tente novamente.");
+            const errorMessage =
+                err instanceof Error
+                    ? err.message
+                    : "Código inválido ou expirado. Tente novamente.";
+            toast.error(errorMessage);
         } finally {
             setIsLoading(false);
         }
@@ -78,7 +86,11 @@ export default function ForgotPassword() {
             await resetPassword(email, code, password);
             setCurrentStep("success");
         } catch (err) {
-            toast.error("Erro ao redefinir a senha. Tente novamente.");
+            const errorMessage =
+                err instanceof Error
+                    ? err.message
+                    : "Erro ao redefinir senha. Tente novamente.";
+            toast.error(errorMessage);
         } finally {
             setIsLoading(false);
         }
@@ -144,7 +156,7 @@ export default function ForgotPassword() {
                     />
                 );
             case "success":
-                return <Step4Success onFinish={handleStartJourney}/>;
+                return <Step4Success onFinish={handleStartJourney} />;
             default:
                 return null;
         }

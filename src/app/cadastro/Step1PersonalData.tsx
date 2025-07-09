@@ -30,7 +30,6 @@ export default function Step1PersonalData({
   };
 
   const isPasswordValid = Object.values(passwordValidation).every(Boolean);
-  const passwordsMatch = (formData.password === formData.confirmPassword) && (formData.password || "").length > 0;
   const hasPasswordContent = (formData.password || "").length > 0;
 
   const incompleteRequirements = Object.entries({
@@ -39,7 +38,7 @@ export default function Step1PersonalData({
     hasLowerCase: "Pelo menos 1 letra minúscula", 
     hasNumber: "Pelo menos 1 número",
     hasSpecialChar: "Pelo menos 1 caractere especial"
-  }).filter(([key, _]) => !passwordValidation[key as keyof typeof passwordValidation]);
+  }).filter(([key]) => !passwordValidation[key as keyof typeof passwordValidation]);
 
   const shouldShowRequirements = hasPasswordContent && !isPasswordValid;
 
