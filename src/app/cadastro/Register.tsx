@@ -10,7 +10,7 @@ import Image from 'next/image'
 
 import { RegisterForm } from "@/types/user";
 
-import { registerUser } from "@/services/user";
+import { registerUser } from "@/services/auth";
 
 import Step1PersonalData from "./Step1PersonalData";
 import Step2Interests from "./Step2Interests";
@@ -156,7 +156,20 @@ export default function Register() {
                 toast.error("E-mail inválido", { description: "Por favor, insira um e-mail válido." });
                 return;
             }
-            if (formData.password !== formData.confirmPassword) {
+
+            const passwordValid = formData.password && formData.password.length >= 8 &&
+                             /[A-Z]/.test(formData.password) &&
+                             /[a-z]/.test(formData.password) &&
+                             /\d/.test(formData.password) &&
+                             /[!@#$%^&*(),.?":{}|<>]/.test(formData.password);
+            const passwordsMatch = formData.password === formData.confirmPassword
+
+            if (!passwordValid) {   
+                toast.error("Senha inválida", { description: "A senha não segue os requisitos necessários." });
+                return;
+            }
+
+            if (!passwordsMatch) {
                 toast.error("Senhas não coincidem", { description: "Por favor, verifique suas senhas." });
                 return;
             }

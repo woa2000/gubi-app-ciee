@@ -4,7 +4,6 @@ import React from "react";
 import Image from "next/image";
 
 export default function PrivacyPolicy() {
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
             <div className="container mx-auto px-4 py-8 max-w-4xl">

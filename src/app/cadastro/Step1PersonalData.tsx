@@ -3,13 +3,8 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Eye, EyeOff, CheckCircle } from "lucide-react";
 import { RegisterForm } from "@/types/user";
 
 interface Props {
@@ -21,8 +16,32 @@ export default function Step1PersonalData({
   formData,
   updateFormData,
 }: Props) {
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const [city, setCity] = React.useState(formData.location.split(" - ")[0] || "");
   const [state, setState] = React.useState(formData.location.split(" - ")[1] || "");
+
+  const passwordValidation = {
+    minLength: (formData.password || "").length >= 8,
+    hasUpperCase: /[A-Z]/.test(formData.password || ""),
+    hasLowerCase: /[a-z]/.test(formData.password || ""),
+    hasNumber: /\d/.test(formData.password || ""),
+    hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(formData.password || "")
+  };
+
+  const isPasswordValid = Object.values(passwordValidation).every(Boolean);
+  const passwordsMatch = (formData.password === formData.confirmPassword) && (formData.password || "").length > 0;
+  const hasPasswordContent = (formData.password || "").length > 0;
+
+  const incompleteRequirements = Object.entries({
+    minLength: "Pelo menos 8 caracteres",
+    hasUpperCase: "Pelo menos 1 letra maiúscula",
+    hasLowerCase: "Pelo menos 1 letra minúscula", 
+    hasNumber: "Pelo menos 1 número",
+    hasSpecialChar: "Pelo menos 1 caractere especial"
+  }).filter(([key, _]) => !passwordValidation[key as keyof typeof passwordValidation]);
+
+  const shouldShowRequirements = hasPasswordContent && !isPasswordValid;
 
   const states = [
     { id: "AC", label: "Acre" },
@@ -126,27 +145,69 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="password">Crie uma senha? *</Label>
+          <Label htmlFor="password">Senha *</Label>
           <div className="mb-2"></div>
-          <Input
-            id="password"
-            type="password"
-            value={formData.password}
-            onChange={(e) => updateFormData({ password: e.target.value })}
-            placeholder="Digite sua senha"
-          />
+          {shouldShowRequirements && (
+            <div className="mb-3 p-3 bg-gray-50 rounded-md border">
+              <p className="text-sm font-medium text-gray-700 mb-2">Requisitos da senha:</p>
+              <div className="space-y-1">
+                {incompleteRequirements.map(([key, label]) => (
+                  <div key={key} className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-gray-300" />
+                    <span className="text-sm text-gray-500">{label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="relative">
+            <Input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              value={formData.password || ""}
+              onChange={(e) => updateFormData({ password: e.target.value })}
+              placeholder="Digite sua senha"
+              className="pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2"
+            >
+              {showPassword ? (
+                <EyeOff className="w-4 h-4 text-gray-500" />
+              ) : (
+                <Eye className="w-4 h-4 text-gray-500" />
+              )}
+            </button>
+          </div>
         </div>
 
         <div>
-          <Label htmlFor="confirm-password">Confirme a senha? *</Label>
+          <Label htmlFor="confirmPassword">Confirmar senha *</Label>
           <div className="mb-2"></div>
-          <Input
-            id="confirm-password"
-            type="password"
-            value={formData.confirmPassword}
-            onChange={(e) => updateFormData({ confirmPassword: e.target.value })}
-            placeholder="Digite sua senha novamente"
-          />
+          <div className="relative">
+            <Input
+              id="confirmPassword"
+              type={showConfirmPassword ? "text" : "password"}
+              value={formData.confirmPassword || ""}
+              onChange={(e) => updateFormData({ confirmPassword: e.target.value })}
+              placeholder="Confirme sua senha"
+              className="pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2"
+            >
+              {showConfirmPassword ? (
+                <EyeOff className="w-4 h-4 text-gray-500" />
+              ) : (
+                <Eye className="w-4 h-4 text-gray-500" />
+              )}
+            </button>
+          </div>
         </div>
 
         <div>
