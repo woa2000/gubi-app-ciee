@@ -106,7 +106,7 @@ export default function Step1PersonalData({
             id="email"
             type="email"
             value={formData.email}
-            onChange={(e) => updateFormData({ email: e.target.value })}
+            onChange={(e) => updateFormData({ email: e.target.value.toLowerCase() })}
             placeholder="seu@email.com"
           />
         </div>
