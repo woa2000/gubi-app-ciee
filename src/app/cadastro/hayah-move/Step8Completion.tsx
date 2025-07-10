@@ -118,12 +118,12 @@ export default function Step8Completion({
       {/* Como conheceu */}
       < div >
         <Label className="text-base font-medium">
-          Como conheceu a Jornada ProFuturo? *
+          Qual é a sua igreja? *
         </Label>
         <div className="mb-2" />
         <Select value={selected} onValueChange={handleSelectChange}>
           <SelectTrigger>
-            <SelectValue placeholder="Selecione como conheceu" />
+            <SelectValue placeholder="Selecione sua igreja" />
           </SelectTrigger>
           <SelectContent>
             {churches.map(opt => (
