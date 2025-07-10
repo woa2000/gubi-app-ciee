@@ -36,11 +36,6 @@ export default function Step1PersonalData({
       .catch(() => setCitiesList([]));
   }, [state]);
 
-  const updateLocation = (newCity: string, newState: string) => {
-    const location = `${newCity} - ${newState}`;
-    updateFormData({ location });
-  };
-
   const passwordValidation = {
     minLength: (formData.password || "").length >= 8,
     hasUpperCase: /[A-Z]/.test(formData.password || ""),

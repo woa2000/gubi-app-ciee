@@ -1,10 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Eye, EyeOff, CheckCircle } from "lucide-react";
+import { STATES, fetchCitiesByState, CityOption } from "@/services/locationService";
+
 import { RegisterForm } from "@/types/user";
 
 interface Props {
@@ -18,8 +20,21 @@ export default function Step1PersonalData({
 }: Props) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-  const [city, setCity] = React.useState(formData.location.split(" - ")[0] || "");
-  const [state, setState] = React.useState(formData.location.split(" - ")[1] || "");
+  const [citiesList, setCitiesList] = useState<CityOption[]>([]);
+  const [city, setCity] = useState(formData.location.split(" - ")[0] || "");
+  const [state, setState] = useState(formData.location.split(" - ")[1] || "");
+
+  useEffect(() => {
+    if (!state) {
+      setCitiesList([]);
+      setCity("");
+      return;
+    }
+
+    fetchCitiesByState(state)
+      .then((data) => setCitiesList(data))
+      .catch(() => setCitiesList([]));
+  }, [state]);
 
   const passwordValidation = {
     minLength: (formData.password || "").length >= 8,
@@ -35,42 +50,12 @@ export default function Step1PersonalData({
   const incompleteRequirements = Object.entries({
     minLength: "Pelo menos 8 caracteres",
     hasUpperCase: "Pelo menos 1 letra maiúscula",
-    hasLowerCase: "Pelo menos 1 letra minúscula", 
+    hasLowerCase: "Pelo menos 1 letra minúscula",
     hasNumber: "Pelo menos 1 número",
     hasSpecialChar: "Pelo menos 1 caractere especial"
   }).filter(([key]) => !passwordValidation[key as keyof typeof passwordValidation]);
 
   const shouldShowRequirements = hasPasswordContent && !isPasswordValid;
-
-  const states = [
-    { id: "AC", label: "Acre" },
-    { id: "AL", label: "Alagoas" },
-    { id: "AP", label: "Amapá" },
-    { id: "AM", label: "Amazonas" },
-    { id: "BA", label: "Bahia" },
-    { id: "CE", label: "Ceará" },
-    { id: "DF", label: "Distrito Federal" },
-    { id: "ES", label: "Espírito Santo" },
-    { id: "GO", label: "Goiás" },
-    { id: "MA", label: "Maranhão" },
-    { id: "MT", label: "Mato Grosso" },
-    { id: "MS", label: "Mato Grosso do Sul" },
-    { id: "MG", label: "Minas Gerais" },
-    { id: "PA", label: "Pará" },
-    { id: "PB", label: "Paraíba" },
-    { id: "PR", label: "Paraná" },
-    { id: "PE", label: "Pernambuco" },
-    { id: "PI", label: "Piauí" },
-    { id: "RJ", label: "Rio de Janeiro" },
-    { id: "RN", label: "Rio Grande do Norte" },
-    { id: "RS", label: "Rio Grande do Sul" },
-    { id: "RO", label: "Rondônia" },
-    { id: "RR", label: "Roraima" },
-    { id: "SC", label: "Santa Catarina" },
-    { id: "SP", label: "São Paulo" },
-    { id: "SE", label: "Sergipe" },
-    { id: "TO", label: "Tocantins" }
-  ];
 
   const updateLocation = (newCity: string, newState: string) => {
     const location = `${newCity.trim()} - ${newState.trim()}`;
@@ -257,35 +242,22 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="city">Qual sua cidade? *</Label>
-          <div className="mb-2"></div>
-          <Input
-            id="city"
-            value={city}
-            onChange={(e) => {
-              const newCity = e.target.value;
-              setCity(newCity);
-              updateLocation(newCity, state);
-            }}
-            placeholder="Digite sua cidade"
-          />
-        </div>
-
-        <div>
           <Label htmlFor="state">Qual seu estado? *</Label>
-          <div className="mb-2"></div>
+          <div className="mb-2" />
           <Select
             value={state}
             onValueChange={(value) => {
               setState(value);
-              updateLocation(city, value);
+
+              if (!value) updateFormData({ location: "" });
+              else updateFormData({ location: `${city} - ${value}` });
             }}
           >
             <SelectTrigger>
               <SelectValue placeholder="Selecione seu estado" />
             </SelectTrigger>
             <SelectContent>
-              {states.map((opt) => (
+              {STATES.map((opt) => (
                 <SelectItem key={opt.id} value={opt.id}>
                   {opt.label}
                 </SelectItem>
@@ -294,6 +266,29 @@ export default function Step1PersonalData({
           </Select>
         </div>
 
+        <div>
+          <Label htmlFor="city">Qual sua cidade? *</Label>
+          <div className="mb-2" />
+          <Select
+            value={city}
+            onValueChange={(value) => {
+              setCity(value);
+              updateFormData({ location: `${value} - ${state}` });
+            }}
+            disabled={!state}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder={state ? "Selecione sua cidade" : "Escolha o estado primeiro"} />
+            </SelectTrigger>
+            <SelectContent className="max-h-60 overflow-auto">
+              {citiesList.map((c) => (
+                <SelectItem key={c.id} value={c.nome}>
+                  {c.nome}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </div>
   );
