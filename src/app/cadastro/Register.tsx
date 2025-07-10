@@ -10,7 +10,7 @@ import Image from 'next/image'
 
 import { RegisterForm } from "@/types/user";
 
-import { registerUser } from "@/services/auth";
+import { registerUser, checkEmailExists } from "@/services/auth";
 
 import Step1PersonalData from "./Step1PersonalData";
 import Step2Interests from "./Step2Interests";
@@ -25,6 +25,8 @@ import SuccessScreen from "./SuccessScreen";
 export default function Register() {
     const [currentStep, setCurrentStep] = useState(1);
     const [isRegistered, setIsRegistered] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submittingMessage, setSubmittingMessage] = useState("");
     const [formData, setFormData] = useState<RegisterForm>({
         fullName: "",
         email: "",
@@ -146,48 +148,62 @@ export default function Register() {
 
     const isValidEmail = (email: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.toLowerCase())
 
-    const handleNext = () => {
-        if (currentStep === 1) {
-            if (!formData.fullName || !formData.email || !formData.password || !formData.confirmPassword) {
+    const handleNext = async () => {
+        setIsSubmitting(true);
+
+        try {
+            setSubmittingMessage("");
+            
+            if (currentStep === 1) {
+                if (!formData.fullName || !formData.email || !formData.password || !formData.confirmPassword) {
+                    toast.error("Campos obrigatórios", { description: "Preencha tudo antes de continuar." });
+                    return;
+                }
+
+                const emailExists = await checkEmailExists(formData.email);
+
+                if (!isValidEmail(formData.email) && !emailExists.exists) {
+                    toast.error("E-mail inválido", { description: "Por favor, insira um e-mail válido." });
+                    return;
+                } else if (emailExists.exists) {
+                    toast.error("E-mail já cadastrado", { description: "Já existe um usuário com este e-mail." });
+                    return;
+                }
+
+                const passwordValid = formData.password && formData.password.length >= 8 &&
+                    /[A-Z]/.test(formData.password) &&
+                    /[a-z]/.test(formData.password) &&
+                    /\d/.test(formData.password) &&
+                    /[!@#$%^&*(),.?":{}|<>]/.test(formData.password);
+                const passwordsMatch = formData.password === formData.confirmPassword
+
+                if (!passwordValid) {
+                    toast.error("Senha inválida", { description: "A senha não segue os requisitos necessários." });
+                    return;
+                }
+
+                if (!passwordsMatch) {
+                    toast.error("Senhas não coincidem", { description: "Por favor, verifique suas senhas." });
+                    return;
+                }
+                if (!isValidPhone(formData.phone)) {
+                    toast.error("Telefone inválido", { description: "Por favor, insira um telefone válido." });
+                    return;
+                }
+            }
+
+            if (!validateStep(currentStep)) {
                 toast.error("Campos obrigatórios", { description: "Preencha tudo antes de continuar." });
                 return;
             }
-            if (!isValidEmail(formData.email)) {
-                toast.error("E-mail inválido", { description: "Por favor, insira um e-mail válido." });
-                return;
-            }
 
-            const passwordValid = formData.password && formData.password.length >= 8 &&
-                             /[A-Z]/.test(formData.password) &&
-                             /[a-z]/.test(formData.password) &&
-                             /\d/.test(formData.password) &&
-                             /[!@#$%^&*(),.?":{}|<>]/.test(formData.password);
-            const passwordsMatch = formData.password === formData.confirmPassword
-
-            if (!passwordValid) {   
-                toast.error("Senha inválida", { description: "A senha não segue os requisitos necessários." });
-                return;
-            }
-
-            if (!passwordsMatch) {
-                toast.error("Senhas não coincidem", { description: "Por favor, verifique suas senhas." });
-                return;
-            }
-            if (!isValidPhone(formData.phone)) {
-                toast.error("Telefone inválido", { description: "Por favor, insira um telefone válido." });
-                return;
-            }
+            if (currentStep < totalSteps) {
+                setCurrentStep(currentStep + 1);
+                window.scrollTo(0, 0);
+            } else await handleSubmit();
+        } finally {
+            setIsSubmitting(false);
         }
-
-        if (!validateStep(currentStep)) {
-            toast.error("Campos obrigatórios", { description: "Preencha tudo antes de continuar." });
-            return;
-        }
-
-        if (currentStep < totalSteps) {
-            setCurrentStep(currentStep + 1);
-            window.scrollTo(0, 0);
-        } else handleSubmit();
     };
 
     const handlePrevious = () => {
@@ -198,6 +214,8 @@ export default function Register() {
     };
 
     const handleSubmit = async () => {
+        setSubmittingMessage("Registrando usuário...");
+
         try {
             await registerUser(formData);
             toast.success("Cadastro realizado com sucesso!", {
@@ -270,9 +288,20 @@ export default function Register() {
                             <ArrowLeft className="w-4 h-4" /> Anterior
                         </Button>
 
-                        <Button onClick={handleNext} className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground">
-                            {currentStep === totalSteps ? "🎮 Começar a Jornada" : "Próximo"}
-                            {currentStep !== totalSteps && <ArrowRight className="w-4 h-4" />}
+                        <Button
+                            onClick={handleNext}
+                            disabled={isSubmitting}
+                            className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground"
+                        >
+                            {isSubmitting && submittingMessage
+                                ? submittingMessage
+                                : currentStep === totalSteps
+                                    ? "🎮 Começar a Jornada"
+                                    : "Próximo"
+                            }
+                            {!isSubmitting && currentStep !== totalSteps && (
+                                <ArrowRight className="w-4 h-4" />
+                            )}
                         </Button>
                     </div>
                 </div>

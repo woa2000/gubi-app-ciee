@@ -57,11 +57,6 @@ export default function Step1PersonalData({
 
   const shouldShowRequirements = hasPasswordContent && !isPasswordValid;
 
-  const updateLocation = (newCity: string, newState: string) => {
-    const location = `${newCity.trim()} - ${newState.trim()}`;
-    updateFormData({ location });
-  };
-
   const formatPhone = (value: string) => {
     const digits = value.replace(/\D/g, "")
 

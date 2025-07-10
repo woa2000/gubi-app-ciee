@@ -25,6 +25,26 @@ export async function registerUser(form: RegisterForm) {
   };
 }
 
+export async function checkEmailExists(email: string) {
+  const baseUrl = getApiBaseUrl();
+
+  const response = await fetch(`${baseUrl}/v1/auth/check-email`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok)
+    throw new Error(data.error || "Erro desconhecido");
+
+  return data as {
+    exists: boolean;
+    message: string;
+  };
+}
+
 export const sendRecoveryCode = async (email: string) => {
   const baseUrl = getApiBaseUrl();
 

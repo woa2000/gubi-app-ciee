@@ -10,22 +10,23 @@ import Image from 'next/image'
 
 import { RegisterForm } from "@/types/user";
 
-import { registerUser } from "@/services/auth";
+import { registerUser, checkEmailExists } from "@/services/auth";
 
-import Step1PersonalData from "./Step1PersonalData";
-import Step2Interests from "./Step2Interests";
-import Step3Education from "./Step3Education";
-import Step4Employment from "./Step4Employment";
-import Step5Skills from "./Step5Skills";
-import Step6Challenges from "./Step6Challenges";
-import Step7Socioeconomic from "./Step7Socioeconomic";
+import Step1PersonalData from "../Step1PersonalData";
+import Step2Interests from "../Step2Interests";
+import Step3Education from "../Step3Education";
+import Step4Employment from "../Step4Employment";
+import Step5Skills from "../Step5Skills";
+import Step6Challenges from "../Step6Challenges";
+import Step7Socioeconomic from "../Step7Socioeconomic";
 import Step8Completion from "./Step8Completion";
-import SuccessScreen from "./SuccessScreen";
+import SuccessScreen from "../SuccessScreen";
 
 export default function Register() {
     const [currentStep, setCurrentStep] = useState(1);
     const [isRegistered, setIsRegistered] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submittingMessage, setSubmittingMessage] = useState("");
     const [formData, setFormData] = useState<RegisterForm>({
         fullName: "",
         email: "",
@@ -66,7 +67,7 @@ export default function Register() {
         socialProgram: "",
         householdSize: "",
         peopleWithIncome: "",
-        howFoundUs: "hayah-move",
+        howFoundUs: "",
         customHowFoundUs: "",
         acceptsTerms: false,
         acceptsDataUsage: false,
@@ -151,13 +152,21 @@ export default function Register() {
         setIsSubmitting(true);
 
         try {
+            setSubmittingMessage("");
+            
             if (currentStep === 1) {
                 if (!formData.fullName || !formData.email || !formData.password || !formData.confirmPassword) {
                     toast.error("Campos obrigatórios", { description: "Preencha tudo antes de continuar." });
                     return;
                 }
-                if (!isValidEmail(formData.email)) {
+
+                const emailExists = await checkEmailExists(formData.email);
+
+                if (!isValidEmail(formData.email) && !emailExists.exists) {
                     toast.error("E-mail inválido", { description: "Por favor, insira um e-mail válido." });
+                    return;
+                } else if (emailExists.exists) {
+                    toast.error("E-mail já cadastrado", { description: "Já existe um usuário com este e-mail." });
                     return;
                 }
 
@@ -205,6 +214,8 @@ export default function Register() {
     };
 
     const handleSubmit = async () => {
+        setSubmittingMessage("Registrando usuário...");
+
         try {
             await registerUser(formData);
             toast.success("Cadastro realizado com sucesso!", {
@@ -282,8 +293,8 @@ export default function Register() {
                             disabled={isSubmitting}
                             className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground"
                         >
-                            {isSubmitting
-                                ? "Registrando usuário..."
+                            {isSubmitting && submittingMessage
+                                ? submittingMessage
                                 : currentStep === totalSteps
                                     ? "🎮 Começar a Jornada"
                                     : "Próximo"
