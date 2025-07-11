@@ -32,6 +32,7 @@ export default function Register() {
         email: "",
         password: "",
         confirmPassword: "",
+        country: "",
         phone: "",
         birthDate: "",
         gender: "",
@@ -102,7 +103,7 @@ export default function Register() {
         switch (step) {
             case 1:
                 return !!(formData.fullName && formData.email && formData.password &&
-                    formData.confirmPassword && formData.birthDate &&
+                    formData.confirmPassword && formData.birthDate && formData.country &&
                     formData.gender && formData.location);
             case 2:
                 return !!(formData.userInterests.length > 0 && formData.workPreference &&
@@ -155,7 +156,8 @@ export default function Register() {
             setSubmittingMessage("");
             
             if (currentStep === 1) {
-                if (!formData.fullName || !formData.email || !formData.password || !formData.confirmPassword) {
+                if (!formData.fullName || !formData.email || !formData.password ||
+                    !formData.confirmPassword || !formData.birthDate || !formData.country) {
                     toast.error("Campos obrigatórios", { description: "Preencha tudo antes de continuar." });
                     return;
                 }
@@ -181,12 +183,12 @@ export default function Register() {
                     toast.error("Senha inválida", { description: "A senha não segue os requisitos necessários." });
                     return;
                 }
-
                 if (!passwordsMatch) {
                     toast.error("Senhas não coincidem", { description: "Por favor, verifique suas senhas." });
                     return;
                 }
-                if (!isValidPhone(formData.phone)) {
+
+                if (formData.country === "BR" && !isValidPhone(formData.phone)) {
                     toast.error("Telefone inválido", { description: "Por favor, insira um telefone válido." });
                     return;
                 }

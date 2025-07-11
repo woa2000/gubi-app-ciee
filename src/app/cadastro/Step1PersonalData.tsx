@@ -6,6 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Eye, EyeOff, CheckCircle } from "lucide-react";
 import { STATES, fetchCitiesByState, CityOption } from "@/services/locationService";
+import { CountryCode } from "libphonenumber-js";
+import { getCountries } from "react-phone-number-input";
 
 import { RegisterForm } from "@/types/user";
 
@@ -23,6 +25,8 @@ export default function Step1PersonalData({
   const [citiesList, setCitiesList] = useState<CityOption[]>([]);
   const [city, setCity] = useState(formData.location.split(" - ")[0] || "");
   const [state, setState] = useState(formData.location.split(" - ")[1] || "");
+  const regionNames = new Intl.DisplayNames(['pt-BR'], { type: 'region' })
+  const countryCodes = getCountries() as CountryCode[]
 
   useEffect(() => {
     if (!state) {
@@ -72,6 +76,10 @@ export default function Step1PersonalData({
     return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`
   }
 
+  function formatInternationalPhone(raw: string): string {
+    return raw.replace(/[^0-9+\-()]/g, "");
+  }
+
   return (
     <div className="space-y-6">
       <div className="text-center mb-6">
@@ -110,16 +118,46 @@ export default function Step1PersonalData({
         </div>
 
         <div>
+          <Label htmlFor="residence">Qual é o seu país? *</Label>
+          <div className="mb-2"></div>
+          <Select
+            value={formData.country}
+            onValueChange={(val) => {
+              updateFormData({ country: val as CountryCode, phone: "", location: "" });
+              setCity("");
+              setState("");
+            }}
+          >
+            <SelectTrigger id="residence">
+              <SelectValue placeholder="Selecione onde você mora" />
+            </SelectTrigger>
+            <SelectContent>
+              {countryCodes.map((c) => (
+                <SelectItem key={c} value={c}>
+                  {regionNames.of(c) ?? c}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div>
           <Label htmlFor="phone">Se tiver WhatsApp, qual é o número?</Label>
           <div className="mb-2"></div>
           <Input
             id="phone"
             value={formData.phone}
             onChange={(e) => {
-              const formatted = formatPhone(e.target.value)
-              updateFormData({ phone: formatted })
+              if (formData.country === "BR") {
+                const formatted = formatPhone(e.target.value)
+                updateFormData({ phone: formatted })
+              }
+              else {
+                const formatted = formatInternationalPhone(e.target.value)
+                updateFormData({ phone: formatted })
+              }
             }}
-            placeholder="(11) 99999-9999"
+            placeholder="Digite o seu número de WhatsApp"
           />
         </div>
 
@@ -236,54 +274,69 @@ export default function Step1PersonalData({
           )}
         </div>
 
-        <div>
-          <Label htmlFor="state">Qual seu estado? *</Label>
-          <div className="mb-2" />
-          <Select
-            value={state}
-            onValueChange={(value) => {
-              setState(value);
+        {formData.country === "BR" ? (
+          <>
+            <div>
+              <Label htmlFor="state">Qual seu estado? *</Label>
+              <div className="mb-2" />
+              <Select
+                value={state}
+                onValueChange={(value) => {
+                  setState(value);
 
-              if (!value) updateFormData({ location: "" });
-              else updateFormData({ location: `${city} - ${value}` });
-            }}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Selecione seu estado" />
-            </SelectTrigger>
-            <SelectContent>
-              {STATES.map((opt) => (
-                <SelectItem key={opt.id} value={opt.id}>
-                  {opt.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+                  if (!value) updateFormData({ location: "" });
+                  else updateFormData({ location: `${city} - ${value}` });
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione seu estado" />
+                </SelectTrigger>
+                <SelectContent>
+                  {STATES.map((opt) => (
+                    <SelectItem key={opt.id} value={opt.id}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-        <div>
-          <Label htmlFor="city">Qual sua cidade? *</Label>
-          <div className="mb-2" />
-          <Select
-            value={city}
-            onValueChange={(value) => {
-              setCity(value);
-              updateFormData({ location: `${value} - ${state}` });
-            }}
-            disabled={!state}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder={state ? "Selecione sua cidade" : "Escolha o estado primeiro"} />
-            </SelectTrigger>
-            <SelectContent className="max-h-60 overflow-auto">
-              {citiesList.map((c) => (
-                <SelectItem key={c.id} value={c.nome}>
-                  {c.nome}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+            <div>
+              <Label htmlFor="city">Qual sua cidade? *</Label>
+              <div className="mb-2" />
+              <Select
+                value={city}
+                onValueChange={(value) => {
+                  setCity(value);
+                  updateFormData({ location: `${value} - ${state}` });
+                }}
+                disabled={!state}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder={state ? "Selecione sua cidade" : "Escolha o estado primeiro"} />
+                </SelectTrigger>
+                <SelectContent className="max-h-60 overflow-auto">
+                  {citiesList.map((c) => (
+                    <SelectItem key={c.id} value={c.nome}>
+                      {c.nome}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </>
+        ) : (
+          <div>
+            <Label htmlFor="location">Onde você mora? *</Label>
+            <div className="mb-2" />
+            <Input
+              id="location"
+              value={formData.location}
+              onChange={(e) => updateFormData({ location: e.target.value })}
+              placeholder="Digite sua cidade e estado"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

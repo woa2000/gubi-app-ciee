@@ -4,6 +4,7 @@
         email: string;
         password: string;
         confirmPassword: string;
+        country: string;
         phone: string;
         birthDate: string;
         gender: string;
