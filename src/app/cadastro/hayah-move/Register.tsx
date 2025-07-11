@@ -102,17 +102,24 @@ export default function Register() {
         "o3-ano_medio"
     ].includes(formData.grade);
 
+    const shouldShowInCollegeFields = [
+        "curso_tecnico",
+        "cursando_superior",
+    ].includes(formData.grade);
+
     const validateStep = (step: number): boolean => {
         switch (step) {
             case 1:
                 return !!(formData.fullName && formData.email && formData.password &&
-                    formData.confirmPassword && formData.birthDate &&
+                    formData.confirmPassword && formData.birthDate && formData.country &&
                     formData.gender && formData.location);
             case 2:
                 return !!(formData.userInterests.length > 0 && formData.workPreference &&
                     formData.workEnvironment && formData.companyType && formData.userSkills.length > 0);
             case 3:
                 return !!(formData.grade && (!shouldShowSchoolField || formData.currentInstitution) && formData.wantsFaculty &&
+                    (!shouldShowInCollegeFields || formData.currentInstitution) && (!shouldShowInCollegeFields || formData.courseName) &&
+                    (!shouldShowInCollegeFields || formData.startCourseDate) && (!shouldShowInCollegeFields || formData.endCourseDate) &&
                     formData.studyFormat && formData.needsFinancialSupport && formData.wantsFinancialInfo);
             case 4:
                 return !!(formData.twoYearGoals.length > 0 && formData.workWhileStudying &&
