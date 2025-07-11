@@ -71,7 +71,7 @@ export default function Register() {
         socialProgram: "",
         householdSize: "",
         peopleWithIncome: "",
-        howFoundUs: "",
+        howFoundUs: "hayah-move",
         customHowFoundUs: "",
         acceptsTerms: false,
         acceptsDataUsage: false,

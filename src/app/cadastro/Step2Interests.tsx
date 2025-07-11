@@ -156,7 +156,7 @@ export default function Step2Interests({
 
       {/* Preferência de trabalho */}
       <div>
-        <Label className="text-base font-medium">
+        <Label className="text-base font-medium mb-2">
           Como você prefere trabalhar? *
         </Label>
         <Select
@@ -180,7 +180,7 @@ export default function Step2Interests({
 
       {/* Ambiente de trabalho */}
       <div>
-        <Label className="text-base font-medium">
+        <Label className="text-base font-medium mb-2">
           Com qual ambiente você mais se identifica para trabalhar? *
         </Label>
         <Select
@@ -204,7 +204,7 @@ export default function Step2Interests({
 
       {/* Tipo de empresa */}
       <div>
-        <Label className="text-base font-medium">
+        <Label className="text-base font-medium mb-2">
           Com qual tipo de empresa você mais se identifica para trabalhar? *
         </Label>
         <Select
