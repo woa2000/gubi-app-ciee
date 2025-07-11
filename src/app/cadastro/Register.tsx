@@ -50,6 +50,9 @@ export default function Register() {
         currentInstitution: "",
         institution: "",
         studyFormat: "",
+        courseName: "",
+        startCourseDate: "",
+        endCourseDate: "",
         needsFinancialSupport: "",
         wantsFinancialInfo: "",
         twoYearGoals: [],
@@ -99,6 +102,11 @@ export default function Register() {
         "o3-ano_medio"
     ].includes(formData.grade);
 
+    const shouldShowInCollegeFields = [
+        "curso_tecnico",
+        "cursando_superior",
+    ].includes(formData.grade);
+
     const validateStep = (step: number): boolean => {
         switch (step) {
             case 1:
@@ -110,6 +118,8 @@ export default function Register() {
                     formData.workEnvironment && formData.companyType && formData.userSkills.length > 0);
             case 3:
                 return !!(formData.grade && (!shouldShowSchoolField || formData.currentInstitution) && formData.wantsFaculty &&
+                    (!shouldShowInCollegeFields || formData.currentInstitution) && (!shouldShowInCollegeFields || formData.courseName) &&
+                    (!shouldShowInCollegeFields || formData.startCourseDate) && (!shouldShowInCollegeFields || formData.endCourseDate) &&
                     formData.studyFormat && formData.needsFinancialSupport && formData.wantsFinancialInfo);
             case 4:
                 return !!(formData.twoYearGoals.length > 0 && formData.workWhileStudying &&
@@ -154,7 +164,7 @@ export default function Register() {
 
         try {
             setSubmittingMessage("");
-            
+
             if (currentStep === 1) {
                 if (!formData.fullName || !formData.email || !formData.password ||
                     !formData.confirmPassword || !formData.birthDate || !formData.country) {

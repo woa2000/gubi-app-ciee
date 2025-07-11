@@ -60,7 +60,12 @@ export default function Step3Education({
     "o9_ano",
     "o1-ano_medio",
     "o2-ano_medio",
-    "o3-ano_medio"
+    "o3-ano_medio",
+  ].includes(formData.grade);
+
+  const shouldShowInCollegeFields = [
+    "curso_tecnico",
+    "cursando_superior",
   ].includes(formData.grade);
 
   const filteredWantsFacultyOptions = [
@@ -161,10 +166,10 @@ export default function Step3Education({
       </div>
 
       {/* Instituição Atual */}
-      {shouldShowSchoolField && (
+      {(shouldShowSchoolField || shouldShowInCollegeFields) && (
         <div>
           <Label htmlFor="current-institution">
-            Qual o nome da sua escola? (Não abreviar) *
+            {formData.grade === "cursando_superior" || formData.grade === "curso_tecnico" ? "Você estuda em que instituição? (Não abreviar) *" : "Qual o nome da sua escola? (Não abreviar) *"}
           </Label>
           <Input
             id="current-institution"
@@ -172,7 +177,60 @@ export default function Step3Education({
             onChange={(e) =>
               updateFormData({ currentInstitution: e.target.value })
             }
-            placeholder={"Digite o nome da sua escola"}
+            placeholder={formData.grade === "cursando_superior" || formData.grade === "curso_tecnico" ? "Digite o nome da sua instituição" : "Digite o nome da sua escola"}
+            className="mt-2"
+          />
+        </div>
+      )}
+
+      {shouldShowInCollegeFields && (
+        <div>
+          <Label htmlFor="course-name">
+            Qual o nome do seu curso? (Não abreviar) *
+          </Label>
+          <Input
+            id="course-name"
+            value={formData.courseName}
+            onChange={(e) =>
+              updateFormData({ courseName: e.target.value })
+            }
+            placeholder={"Digite o nome do seu curso"}
+            className="mt-2"
+          />
+        </div>
+      )}
+
+      {shouldShowInCollegeFields && (
+        <div>
+          <Label htmlFor="course-start">
+            Em que ano você começou o curso? *
+          </Label>
+          <Input
+            id="course-start"
+            value={formData.startCourseDate}
+            onChange={(e) =>
+              updateFormData({ startCourseDate: e.target.value })
+            }
+            placeholder={"Digite o ano que você começou o curso"}
+            type="number"
+            className="mt-2"
+          />
+        </div>
+      )}
+
+      {shouldShowInCollegeFields && (
+        <div>
+          <Label htmlFor="course-finish">
+            Em que ano você deve terminar o curso? *
+          </Label>
+          <Input
+            id="course-finish"
+            value={formData.endCourseDate}
+            onChange={(e) =>
+              updateFormData({ endCourseDate: e.target.value })
+            }
+            placeholder={"Digite o ano que você deve terminar o curso"}
+            type="number"
             className="mt-2"
           />
         </div>

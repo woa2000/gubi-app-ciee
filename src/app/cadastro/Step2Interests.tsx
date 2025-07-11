@@ -29,7 +29,7 @@ export default function Step2Interests({
     { id: "engenharia",            label: "Engenharia" },
     { id: "arte_design",           label: "Arte e Design" },
     { id: "comunicacao",           label: "Comunicação" },
-    { id: "meio-ambiente",         label: "Meio Ambiente" },
+    { id: "meio_ambiente",         label: "Meio Ambiente" },
     { id: "educacao",              label: "Educação" },
     { id: "empreendedorismo",      label: "Empreendedorismo" },
     { id: "financas",              label: "Finanças" }
