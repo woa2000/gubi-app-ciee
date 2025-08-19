@@ -143,9 +143,8 @@ export function Sidebar({ user }: SidebarProps) {
             <img 
               src="/gubi-logo.png" 
               alt="Gubi Logo" 
-              className="w-8 h-8"
+              className="h-12"
             />
-            <span className="text-xl font-bold text-gray-900">Gubi</span>
           </div>
           <button
             onClick={toggleMobileSidebar}
@@ -195,9 +194,8 @@ function SidebarContent({ user, pathname, menuItems, bottomMenuItems, onItemClic
         <img 
           src="/gubi-logo.png" 
           alt="Gubi Logo" 
-          className="w-8 h-8"
+          className="h-12"
         />
-        <span className="text-xl font-bold text-gray-900">Gubi</span>
       </div>
 
       {/* User Profile */}
