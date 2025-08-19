@@ -12,7 +12,6 @@ import {
   Loader2
 } from 'lucide-react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import ProfileImageUploader from '@/components/profile/ProfileImageUploader';
 import { ProfileBasicInfoForm } from '@/components/profile/ProfileBasicInfoForm';

@@ -26,7 +26,7 @@ interface UseProfileReturn {
   // Utilidades
   isProfileComplete: boolean;
   hasUnsavedChanges: boolean;
-  validateField: (field: string, value: any) => string | null;
+  validateField: (field: string, value: string | number | boolean | null | undefined | string[]) => string | null;
 }
 
 /**

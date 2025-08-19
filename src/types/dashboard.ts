@@ -102,5 +102,5 @@ export interface MarkNotificationReadRequest {
 export interface CompleteMissionRequest {
   missionId: string;
   timeSpent: number; // em segundos
-  answers?: Record<string, any>; // Respostas específicas da missão
+  answers?: Record<string, unknown>; // Respostas específicas da missão
 }

@@ -262,8 +262,8 @@ export class MockProfileService {
     data: Array<{
       id: string;
       field: string;
-      oldValue: any;
-      newValue: any;
+      oldValue: string | number | boolean | null | string[];
+      newValue: string | number | boolean | null | string[];
       timestamp: string;
       userAgent?: string;
       ipAddress?: string;

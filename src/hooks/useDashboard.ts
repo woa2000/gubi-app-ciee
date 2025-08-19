@@ -11,7 +11,7 @@ export interface UseDashboardResult {
   refreshing: boolean;
   refresh: () => Promise<void>;
   markNotificationsAsRead: (notificationIds: string[]) => Promise<void>;
-  completeMission: (missionId: string, timeSpent: number, answers?: Record<string, any>) => Promise<{
+  completeMission: (missionId: string, timeSpent: number, answers?: Record<string, unknown>) => Promise<{
     success: boolean;
     xpGained?: number;
     levelUp?: boolean;
@@ -281,7 +281,7 @@ export function useDashboard(userId: string): UseDashboardResult {
   const completeMission = useCallback(async (
     missionId: string, 
     timeSpent: number, 
-    answers?: Record<string, any>
+    answers?: Record<string, unknown>
   ) => {
     try {
       const token = DashboardStorage.getAuthToken();
@@ -388,11 +388,11 @@ export function useDashboard(userId: string): UseDashboardResult {
 }
 
 // Hook for managing user preferences
-export function useUserPreferences(userId: string) {
-  const [preferences, setPreferences] = useState<Record<string, any> | null>(null);
+export function useUserPreferences() {
+  const [preferences, setPreferences] = useState<Record<string, unknown> | null>(null);
   const [updating, setUpdating] = useState(false);
 
-  const updatePreferences = useCallback(async (updates: Record<string, any>) => {
+  const updatePreferences = useCallback(async (updates: Record<string, unknown>) => {
     try {
       setUpdating(true);
       const token = DashboardStorage.getAuthToken();

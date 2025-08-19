@@ -283,7 +283,7 @@ export function ProgressCard({
             </div>
             <div>
               <p className="font-medium text-gray-900">Próxima conquista</p>
-              <p className="text-sm text-gray-600">Complete 5 atividades para desbloquear "Persistente"</p>
+              <p className="text-sm text-gray-600">Complete 5 atividades para desbloquear &quot;Persistente&quot;</p>
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import {
   NotificationApiResponse, 
   ProgressApiResponse,
   UpdatePreferencesRequest,
+  DashboardData,
   MarkNotificationReadRequest,
   CompleteMissionRequest 
 } from '@/types/dashboard';
@@ -211,7 +212,7 @@ export class DashboardService {
   async trackEvent(
     token: string,
     eventType: string,
-    eventData: Record<string, any>,
+    eventData: Record<string, unknown>,
     timestamp = new Date().toISOString()
   ): Promise<{ success: boolean }> {
     try {
@@ -251,7 +252,7 @@ export const DashboardStorage = {
   /**
    * Salva dados do dashboard no localStorage para cache offline
    */
-  saveDashboardCache(userId: string, data: any) {
+  saveDashboardCache(userId: string, data: DashboardData) {
     try {
       const cacheData = {
         data,

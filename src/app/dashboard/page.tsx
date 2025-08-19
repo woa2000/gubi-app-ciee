@@ -3,13 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { 
-  WelcomeCard, 
-  DailyMissionsCard, 
-  ProgressCard 
+  WelcomeCard
 } from '@/components/dashboard/DashboardCards';
 import { useDashboard } from '@/hooks/useDashboard';
 import { useAuth } from '@/hooks/useAuth';
-import { Loader2, AlertCircle, RefreshCw } from 'lucide-react';
+import { Loader2, AlertCircle } from 'lucide-react';
 
 interface DashboardUser {
   id: number | string;
@@ -45,9 +43,7 @@ export default function DashboardPage() {
     data: dashboardData,
     loading,
     error,
-    refreshing,
-    refresh,
-    completeMission
+    refresh
   } = useDashboard(user?.id?.toString() || '');
 
   // Mostrar loading se estiver carregando o usuário
@@ -74,14 +70,7 @@ export default function DashboardPage() {
     );
   }
 
-  const handleStartMission = async (missionId: string) => {
-    try {
-      // Navigate to mission page - in a real app, you'd use Next.js router
-      window.location.href = `/dashboard/activities/${missionId}`;
-    } catch (error) {
-      console.error('Error starting mission:', error);
-    }
-  };
+
 
   if (loading) {
     return (

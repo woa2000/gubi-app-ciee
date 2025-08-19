@@ -115,8 +115,8 @@ export interface ProfileUpdateRequest {
   profileData: EditableProfileFields;
   changeLog?: {
     field: string;
-    oldValue: any;
-    newValue: any;
+    oldValue: string | number | boolean | null | string[];
+    newValue: string | number | boolean | null | string[];
     timestamp: string;
   }[];
 }

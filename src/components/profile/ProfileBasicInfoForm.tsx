@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Save, User, Phone, Calendar, MapPin, X, Plus } from 'lucide-react';
+import { Save, User, Phone, Calendar, MapPin, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,7 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 import { UserProfile, EditableProfileFields, GENDER_OPTIONS } from '@/types/profile';
 
 interface ProfileBasicInfoFormProps {
@@ -19,7 +18,7 @@ interface ProfileBasicInfoFormProps {
   onSave: (updates: EditableProfileFields) => Promise<boolean>;
   saving: boolean;
   disabled?: boolean;
-  validateField: (field: string, value: any) => string | null;
+  validateField: (field: string, value: string | number | boolean | null | undefined | string[]) => string | null;
 }
 
 export function ProfileBasicInfoForm({
@@ -87,7 +86,7 @@ export function ProfileBasicInfoForm({
       const originalValue = profile[key as keyof UserProfile];
       
       if (currentValue !== (originalValue || '')) {
-        (updates as any)[key] = currentValue;
+        (updates as Record<string, string | number | boolean | undefined | string[]>)[key] = currentValue;
       }
     });
 

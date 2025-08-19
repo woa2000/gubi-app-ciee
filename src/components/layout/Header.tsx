@@ -90,7 +90,7 @@ export function Header({ user }: HeaderProps) {
                       <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
                       <div>
                         <p className="text-sm font-medium text-gray-900">Conquista desbloqueada!</p>
-                        <p className="text-sm text-gray-600">Você ganhou o badge "Explorador"</p>
+                        <p className="text-sm text-gray-600">Você ganhou o badge &quot;Explorador&quot;</p>
                         <p className="text-xs text-gray-400 mt-1">Há 2 horas</p>
                       </div>
                     </div>
