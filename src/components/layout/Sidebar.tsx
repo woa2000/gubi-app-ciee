@@ -5,11 +5,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { 
   Home, 
   Target, 
-  TrendingUp, 
   User, 
   Settings, 
-  BookOpen,
-  Trophy,
   Bell,
   HelpCircle,
   LogOut,
@@ -39,27 +36,6 @@ const menuItems = [
     title: 'Atividades',
     icon: Target,
     path: '/dashboard/activities',
-    badge: 0
-  },
-  {
-    id: 'progress',
-    title: 'Progresso',
-    icon: TrendingUp,
-    path: '/dashboard/progress',
-    badge: 0
-  },
-  {
-    id: 'achievements',
-    title: 'Conquistas',
-    icon: Trophy,
-    path: '/dashboard/achievements',
-    badge: 0
-  },
-  {
-    id: 'learning',
-    title: 'Aprendizado',
-    icon: BookOpen,
-    path: '/dashboard/learning',
     badge: 0
   }
 ];
