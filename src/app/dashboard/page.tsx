@@ -157,39 +157,45 @@ export default function DashboardPage() {
     }}>
       <div className="space-y-6">
         {/* Welcome Card */}
-        <WelcomeCard
+         <WelcomeCard
+          userName={user.name}
+          isFirstLogin={dashboardData.user.isFirstLogin}
+          currentStreak={1}
+          currentLevel={1}
+        />
+        {/* <WelcomeCard
           userName={user.name}
           isFirstLogin={dashboardData.user.isFirstLogin}
           currentStreak={dashboardData.progress.currentStreak}
           currentLevel={dashboardData.progress.currentLevel}
-        />
+        /> */}
 
         {/* Main Dashboard Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Daily Missions */}
           <div className="lg:col-span-1">
-            <DailyMissionsCard
+            {/* <DailyMissionsCard
               missions={dashboardData.dailyMissions}
               onStartMission={handleStartMission}
-            />
+            /> */}
           </div>
 
           {/* Progress Card */}
           <div className="lg:col-span-1">
-            <ProgressCard
+            {/* <ProgressCard
               currentLevel={dashboardData.progress.currentLevel}
               currentXP={dashboardData.progress.currentXP}
               xpToNextLevel={dashboardData.progress.xpToNextLevel}
               currentStreak={dashboardData.progress.currentStreak}
               longestStreak={dashboardData.progress.longestStreak}
-            />
+            /> */}
           </div>
         </div>
 
         {/* Recent Activity & Recommendations */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Recent Notifications */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          {/* <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Atividade Recente</h2>
             <div className="space-y-3">
               {dashboardData.recentNotifications.slice(0, 3).map((notification) => (
@@ -219,10 +225,10 @@ export default function DashboardPage() {
                 Ver todas as notificações
               </button>
             </div>
-          </div>
+          </div> */}
 
           {/* Recommendations */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          {/* <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Recomendado para Você</h2>
             <div className="space-y-3">
               {dashboardData.recommendations.slice(0, 3).map((recommendation) => (
@@ -250,7 +256,7 @@ export default function DashboardPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
 
       </div>
