@@ -2,11 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { 
-  WelcomeCard,
-  DailyMissionsCard, 
-  ProgressCard
-} from '@/components/dashboard/DashboardCards';
+import { WelcomeCard } from '@/components/dashboard/DashboardCards';
 import { useDashboard } from '@/hooks/useDashboard';
 import { useAuth } from '@/hooks/useAuth';
 import { Loader2, AlertCircle } from 'lucide-react';
@@ -52,15 +48,7 @@ export default function DashboardPage() {
     refresh
   } = useDashboard(user?.id?.toString() || '');
 
-  // Handler para iniciar uma missão
-  const handleStartMission = async (missionId: string) => {
-    try {
-      // Navigate to mission page - in a real app, you'd use Next.js router
-      window.location.href = `/dashboard/activities/${missionId}`;
-    } catch (error) {
-      console.error('Error starting mission:', error);
-    }
-  };
+  // (Removido handler de missão não utilizado)
 
   // Mostrar loading se estiver carregando o usuário
   if (userLoading) {
@@ -170,27 +158,7 @@ export default function DashboardPage() {
           currentLevel={dashboardData.progress.currentLevel}
         /> */}
 
-        {/* Main Dashboard Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Daily Missions */}
-          <div className="lg:col-span-1">
-            {/* <DailyMissionsCard
-              missions={dashboardData.dailyMissions}
-              onStartMission={handleStartMission}
-            /> */}
-          </div>
-
-          {/* Progress Card */}
-          <div className="lg:col-span-1">
-            {/* <ProgressCard
-              currentLevel={dashboardData.progress.currentLevel}
-              currentXP={dashboardData.progress.currentXP}
-              xpToNextLevel={dashboardData.progress.xpToNextLevel}
-              currentStreak={dashboardData.progress.currentStreak}
-              longestStreak={dashboardData.progress.longestStreak}
-            /> */}
-          </div>
-        </div>
+        {/* Main Dashboard Grid (seções desativadas temporariamente) */}
 
         {/* Recent Activity & Recommendations */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

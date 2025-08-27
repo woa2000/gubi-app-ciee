@@ -35,7 +35,7 @@ export default function ActivitiesPage() {
     );
   }
 
-  const handleStart = (_id: string) => {
+  const handleStart = () => {
     // Mantido para compatibilidade / possíveis métricas futuras
     window.open('https://discovery.gubi.com.br', '_blank', 'noopener,noreferrer');
   };
