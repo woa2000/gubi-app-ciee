@@ -84,14 +84,6 @@ export const DiscoveryCard: React.FC<DiscoveryCardProps> = ({
               <ExternalLink className="w-4 h-4 text-purple-500 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-200" />
             </div>
           </button>
-          
-          <div className="flex items-center justify-center gap-2 text-purple-200/80">
-            <div className="w-1 h-1 bg-purple-300 rounded-full"></div>
-            <span className="text-xs font-medium">Relatório #{resume}</span>
-            <div className="w-1 h-1 bg-purple-300 rounded-full"></div>
-            <span className="text-xs">PDF Personalizado</span>
-            <div className="w-1 h-1 bg-purple-300 rounded-full"></div>
-          </div>
         </div>
 
         {/* Success indicators */}
