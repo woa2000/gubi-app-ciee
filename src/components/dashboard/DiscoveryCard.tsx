@@ -35,13 +35,12 @@ export const DiscoveryCard: React.FC<DiscoveryCardProps> = ({
 
       {/* Character Image - positioned on the right side */}
       <div className="absolute right-0 top-0 bottom-0 w-1/2 overflow-hidden z-20">
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-purple-600/20 to-purple-600/40"></div>
         <Image
           src="/img-plataforma/gubi-personagens.png"
           alt="Gubi Characters"
           width={300}
           height={400}
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 scale-110 opacity-30 hover:opacity-40 hover:scale-115 transition-all duration-500"
+          className="absolute right-0 bottom-0 scale-110 opacity-30 hover:opacity-40 hover:scale-115 transition-all duration-500"
           priority
         />
       </div>
