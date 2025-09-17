@@ -3,8 +3,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { WelcomeCard } from '@/components/dashboard/DashboardCards';
+import { DiscoveryCard } from '@/components/dashboard/DiscoveryCard';
 import { useDashboard } from '@/hooks/useDashboard';
 import { useAuth } from '@/hooks/useAuth';
+import { useProfile } from '@/hooks/useProfile';
 import { Loader2, AlertCircle } from 'lucide-react';
 
 interface DashboardUser {
@@ -47,6 +49,8 @@ export default function DashboardPage() {
     error,
     refresh
   } = useDashboard(user?.id?.toString() || '');
+
+  const { profile } = useProfile();
 
   // (Removido handler de missão não utilizado)
 
@@ -157,6 +161,11 @@ export default function DashboardPage() {
           currentStreak={dashboardData.progress.currentStreak}
           currentLevel={dashboardData.progress.currentLevel}
         /> */}
+
+        {/* Discovery Report Card - Only show if resume exists */}
+        {profile?.discoveryProgress?.resume && (
+          <DiscoveryCard resume={profile.discoveryProgress.resume} />
+        )}
 
         {/* Main Dashboard Grid (seções desativadas temporariamente) */}
 
