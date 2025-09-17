@@ -67,6 +67,9 @@ export const mapGubiServerToUserProfile = (gubiData: GubiServerProfileData): Use
     householdSize: gubiData.socioeconomic?.householdSize || undefined,
     peopleWithIncome: gubiData.socioeconomic?.peopleWithIncome || undefined,
     
+    // Progress do Discovery
+    discoveryProgress: gubiData.discoveryProgress || undefined,
+    
     // Metadados
     createdAt: gubiData.createdAt,
     updatedAt: gubiData.createdAt, // API não tem updatedAt, usar createdAt

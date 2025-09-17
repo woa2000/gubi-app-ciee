@@ -9,7 +9,9 @@ import {
   ChevronLeft,
   AlertCircle,
   CheckCircle2,
-  Loader2
+  Loader2,
+  FileText,
+  ExternalLink
 } from 'lucide-react';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -38,6 +40,14 @@ export default function ProfilePage() {
   
   const [activeTab, setActiveTab] = useState<TabType>('basic');
   const currentUser = getCurrentUser();
+
+  // Função para abrir o relatório PDF
+  const openReport = () => {
+    if (profile?.discoveryProgress?.resume) {
+      const reportPath = `/relatorio/${profile.discoveryProgress.resume}.pdf`;
+      window.open(reportPath, '_blank');
+    }
+  };
 
   // Estados de loading
   if (loading) {
@@ -151,6 +161,25 @@ export default function ProfilePage() {
               uploading={uploading}
               disabled={saving}
             />
+
+            {/* Botão Meu Relatório */}
+            {profile.discoveryProgress?.resume && (
+              <Card>
+                <CardContent className="p-4">
+                  <button
+                    onClick={openReport}
+                    className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
+                  >
+                    <FileText className="w-5 h-5" />
+                    <span>Meu Relatório</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </button>
+                  <p className="text-xs text-gray-600 text-center mt-2">
+                    Visualize seu relatório de discovery completo
+                  </p>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Navegação */}
             <Card>

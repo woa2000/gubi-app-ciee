@@ -52,6 +52,15 @@ export interface UserProfile {
   householdSize?: string;
   peopleWithIncome?: string;
   
+  // Progress do Discovery
+  discoveryProgress?: {
+    id: number;
+    userId: number;
+    resume?: string | null;
+    completedLevels: string[];
+    answers: string[];
+  };
+  
   // Metadados
   createdAt: string;
   updatedAt: string;

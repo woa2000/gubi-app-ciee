@@ -17,7 +17,7 @@ export function ActivityCard({ activity, onStart, externalUrl }: ActivityCardPro
     if (onStart) onStart(activity.id);
     window.open(targetUrl, '_blank', 'noopener,noreferrer');
   };
-
+  
   return (
     <div
       className="group relative bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col cursor-pointer"
@@ -51,7 +51,7 @@ export function ActivityCard({ activity, onStart, externalUrl }: ActivityCardPro
         <div className="mt-auto flex items-center justify-between">
           {activity.estimatedDuration && (
             <span className="text-[11px] text-gray-500">{activity.estimatedDuration} min</span>
-          )}
+          )}          
           <button
             type="button"
             onClick={(e) => { e.stopPropagation(); openExternal(); }}

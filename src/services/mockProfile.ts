@@ -71,6 +71,15 @@ export class MockProfileService {
       householdSize: '4',
       peopleWithIncome: '2',
       
+      // Progress do Discovery
+      discoveryProgress: {
+        id: 1,
+        userId: 1,
+        resume: '1', // Corresponde ao arquivo 1.pdf
+        completedLevels: ['nivel1', 'nivel2', 'nivel3'],
+        answers: ['resposta1', 'resposta2', 'resposta3']
+      },
+      
       // Metadados
       createdAt: '2024-01-15T08:00:00Z',
       updatedAt: '2024-08-15T10:30:00Z',

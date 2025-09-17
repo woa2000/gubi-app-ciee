@@ -1,10 +1,12 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { ActivityCard } from '@/components/dashboard/ActivityCard';
 import { Activity } from '@/types/activity';
+import { DiscoveryResumeRequest } from '@/types/discovery';
 import { useAuth } from '@/hooks/useAuth';
+import { sendDiscoveryResume, generatePdfReportPath } from '@/services/discovery';
 import { AlertCircle } from 'lucide-react';
 
 // Mock temporário - substituir futuramente por chamada de API
@@ -20,10 +22,10 @@ const mockActivities: Activity[] = [
 ];
 
 export default function ActivitiesPage() {
-  const { getCurrentUser, isAuthenticated } = useAuth();
+  const { getCurrentUser, isAuthenticated, getAuthToken } = useAuth();
   const isAuth = isAuthenticated();
   const user = isAuth ? getCurrentUser() : null;
-
+  
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-screen">
