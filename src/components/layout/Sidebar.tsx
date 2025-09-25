@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
+import Image from 'next/image';
 import { 
   Home, 
   Target, 
@@ -48,27 +49,27 @@ const bottomMenuItems = [
     path: '/dashboard/profile',
     badge: 0
   },
-  {
-    id: 'notifications',
-    title: 'Notificações',
-    icon: Bell,
-    path: '/dashboard/notifications',
-    badge: 3
-  },
-  {
-    id: 'help',
-    title: 'Ajuda',
-    icon: HelpCircle,
-    path: '/dashboard/help',
-    badge: 0
-  },
-  {
-    id: 'settings',
-    title: 'Configurações',
-    icon: Settings,
-    path: '/dashboard/settings',
-    badge: 0
-  }
+  // {
+  //   id: 'notifications',
+  //   title: 'Notificações',
+  //   icon: Bell,
+  //   path: '/dashboard/notifications',
+  //   badge: 3
+  // },
+  // {
+  //   id: 'help',
+  //   title: 'Ajuda',
+  //   icon: HelpCircle,
+  //   path: '/dashboard/help',
+  //   badge: 0
+  // },
+  // {
+  //   id: 'settings',
+  //   title: 'Configurações',
+  //   icon: Settings,
+  //   path: '/dashboard/settings',
+  //   badge: 0
+  // }
 ];
 
 export function Sidebar({ user }: SidebarProps) {
@@ -115,11 +116,20 @@ export function Sidebar({ user }: SidebarProps) {
         className="lg:hidden fixed left-0 top-0 h-full w-64 bg-white shadow-lg z-50 transform -translate-x-full transition-transform duration-300 ease-in-out"
       >
         <div className="flex justify-between items-center p-4 border-b">
-          <div className="flex items-center space-x-2">
-            <img 
+          <div className="flex items-end space-x-3">
+            <Image 
               src="/gubi-logo.png" 
               alt="Gubi Logo" 
-              className="h-12"
+              width={40}
+              height={40}
+              className="object-contain"
+            />
+            <Image 
+              src="/ciee/logo-expo-ciee-color.png" 
+              alt="CIEE Logo" 
+              width={60}
+              height={30}
+              className="object-contain"
             />
           </div>
           <button
@@ -166,11 +176,20 @@ function SidebarContent({ user, pathname, menuItems, bottomMenuItems, onItemClic
   return (
     <div className="flex flex-col h-full">
       {/* Logo - Hidden on mobile as it's in the header */}
-      <div className="hidden lg:flex items-center space-x-2 p-6 border-b">
-        <img 
+      <div className="hidden lg:flex items-end justify-center space-x-3 p-6 border-b">
+        <Image 
           src="/gubi-logo.png" 
           alt="Gubi Logo" 
-          className="h-12"
+          width={48}
+          height={48}
+          className="object-contain"
+        />
+        <Image 
+          src="/ciee/logo-expo-ciee-color.png" 
+          alt="CIEE Logo" 
+          width={72}
+          height={36}
+          className="object-contain"
         />
       </div>
 

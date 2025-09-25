@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
+import Image from "next/image";
 
 interface LoginFormProps {
   onSubmit: (email: string, password: string) => Promise<void>;
@@ -57,14 +58,35 @@ export default function LoginForm({ onSubmit, isLoading = false }: LoginFormProp
   };
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-semibold text-center">
-          Entrar na Gubi
-        </CardTitle>
-        <p className="text-sm text-gray-600 text-center">
-          Continue sua jornada de autoconhecimento
-        </p>
+    <Card className="w-full max-w-md bg-white/90 backdrop-blur-sm border-white/20 shadow-xl">
+      <CardHeader className="space-y-4">
+        {/* Logos Section */}
+        <div className="flex items-center justify-center space-x-6 py-2">
+          <div className="flex items-end justify-center h-20">
+            <Image
+              src="/gubi-logo.png"
+              alt="Gubi Logo"
+              width={80}
+              height={80}
+              className="object-contain"
+            />
+          </div>
+          <div className="flex items-center justify-center h-20">
+            <Image
+              src="/ciee/logo-expo-ciee-color.png"
+              alt="CIEE Logo"
+              width={120}
+              height={80}
+              className="object-contain"
+            />
+          </div>
+        </div>
+        
+        <div className="space-y-1">          
+          <p className="text-md text-gray-600 text-center">
+            Continue sua jornada de autoconhecimento
+          </p>
+        </div>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
