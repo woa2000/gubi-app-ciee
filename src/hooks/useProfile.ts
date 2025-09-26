@@ -58,7 +58,7 @@ export const useProfile = (): UseProfileReturn => {
       apiBaseUrl: useRealApi ? 'https://gubi-server.onrender.com/api' : 'mock',
       NEXT_PUBLIC_USE_REAL_API: process.env.NEXT_PUBLIC_USE_REAL_API
     });
-  }, [currentUser?.id, token]); // Usar apenas o ID para evitar re-renders desnecessários
+  }, [currentUser, token]); // Incluindo currentUser completo para debug
 
   /**
    * Busca perfil do usuário (com cache offline-first)
@@ -448,7 +448,7 @@ export const useProfile = (): UseProfileReturn => {
     };
 
     loadProfile();
-  }, [currentUser?.id, token]); // Usar apenas currentUser.id em vez do objeto completo
+  }, [currentUser, token]); // Incluindo currentUser para detectar mudanças de usuário
 
   // Utilitários computados
   const isProfileComplete = profile ? ProfileValidation.isProfileComplete(profile) : false;

@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Bell, Search, ChevronDown, Settings } from 'lucide-react';
+import Image from 'next/image';
+import { Search, ChevronDown, Settings } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 interface HeaderProps {
@@ -15,7 +16,6 @@ interface HeaderProps {
 
 export function Header({ user }: HeaderProps) {
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
   const { logout } = useAuth();
 
   const handleLogout = async () => {
@@ -53,11 +53,13 @@ export function Header({ user }: HeaderProps) {
               onClick={() => setShowUserMenu(!showUserMenu)}
               className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 transition-colors"
             >
-              <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+              <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white text-sm font-semibold overflow-hidden">
                 {user.profileImage ? (
-                  <img 
+                  <Image 
                     src={user.profileImage} 
                     alt={user.name}
+                    width={32}
+                    height={32}
                     className="w-full h-full rounded-full object-cover" 
                   />
                 ) : (

@@ -3,9 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+// import { Input } from "@/components/ui/input";
 import { RegisterForm } from "@/types/user";
 
 interface Props {
@@ -17,14 +17,6 @@ export default function Step8Completion({
   formData,
   updateFormData,
 }: Props) {
-  const howFoundOptions = [
-    { id: "escola", label: "Escola" },
-    { id: "professor", label: "Professor" },
-    { id: "instagram", label: "Instagram" },
-    { id: "indicacao", label: "Indicação" },
-    { id: "outro", label: "Outro" },
-  ];
-
   return (
     <div className="space-y-6">
       {/* Cabeçalho */}

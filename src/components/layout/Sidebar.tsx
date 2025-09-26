@@ -7,9 +7,6 @@ import {
   Home, 
   Target, 
   User, 
-  Settings, 
-  Bell,
-  HelpCircle,
   LogOut,
   Menu,
   X
@@ -196,11 +193,13 @@ function SidebarContent({ user, pathname, menuItems, bottomMenuItems, onItemClic
       {/* User Profile */}
       <div className="p-4 border-b">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
+          <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-semibold overflow-hidden">
             {user.profileImage ? (
-              <img 
+              <Image 
                 src={user.profileImage} 
                 alt={user.name}
+                width={40}
+                height={40}
                 className="w-full h-full rounded-full object-cover" 
               />
             ) : (

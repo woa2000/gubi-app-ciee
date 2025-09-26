@@ -99,7 +99,7 @@ export default function Step3Education({
     if (autoFacultyValue && formData.wantsFaculty !== autoFacultyValue) {
       updateFormData({ wantsFaculty: autoFacultyValue });
     }
-  }, [formData.grade]);
+  }, [formData.grade, autoFacultyValue, formData.wantsFaculty, updateFormData]);
 
   const studyFormatOptions = [
     { id: "online", label: "Online" },
@@ -122,7 +122,7 @@ export default function Step3Education({
     if (shouldSetSupportAsConcluded && formData.needsFinancialSupport !== "ja_concluida") {
       updateFormData({ needsFinancialSupport: "ja_concluida" });
     }
-  }, [formData.grade]);
+  }, [formData.grade, shouldSetSupportAsConcluded, formData.needsFinancialSupport, updateFormData]);
 
   const needsFinancialSupportOptions = [
     { id: "sim_financiamento", label: "Sim, preciso de financiamento ou bolsa", },

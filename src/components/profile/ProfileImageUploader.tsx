@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 import { Camera, Upload, X, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -93,9 +94,11 @@ export default function ProfileImageUploader({
           <div className="relative">
             {currentImage ? (
               <div className="relative">
-                <img
+                <Image
                   src={currentImage}
                   alt={`Foto de ${userName}`}
+                  width={128}
+                  height={128}
                   className="w-32 h-32 rounded-full object-cover border-4 border-gray-200"
                 />
                 <Button

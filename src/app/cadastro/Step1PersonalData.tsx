@@ -6,8 +6,6 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Eye, EyeOff, CheckCircle } from "lucide-react";
 import { STATES, fetchCitiesByState, CityOption } from "@/services/locationService";
-import { CountryCode } from "libphonenumber-js";
-import { getCountries } from "react-phone-number-input";
 
 import { RegisterForm } from "@/types/user";
 
@@ -25,8 +23,6 @@ export default function Step1PersonalData({
   const [citiesList, setCitiesList] = useState<CityOption[]>([]);
   const [city, setCity] = useState(formData.location.split(" - ")[0] || "");
   const [state, setState] = useState(formData.location.split(" - ")[1] || "");
-  const regionNames = new Intl.DisplayNames(['pt-BR'], { type: 'region' })
-  const countryCodes = getCountries() as CountryCode[]
 
   useEffect(() => {
     if (!state) {

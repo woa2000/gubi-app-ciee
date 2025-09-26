@@ -52,38 +52,6 @@ export default function Step2Interests({
     { id: "equilibrio",               label: "Ter equilíbrio entre vida pessoal e profissional" },
   ];
 
-  const userSkillOptions = [
-    { id: "comunicacao",           label: "Comunicação" },
-    { id: "organizacao",           label: "Organização" },
-    { id: "criatividade",          label: "Criatividade" },
-    { id: "logica",                label: "Lógica e raciocínio" },
-    { id: "lideranca",             label: "Liderança" },
-    { id: "adaptabilidade",        label: "Adaptabilidade" },
-    { id: "trabalho_equipe",       label: "Trabalho em equipe" },
-    { id: "idiomas",               label: "Idiomas" },
-    { id: "programacao",           label: "Programação" },
-    { id: "excel",                 label: "Excel ou similares" },
-    { id: "ferramentas_digitais",  label: "Ferramentas digitais" },
-    { id: "resolucao_problemas",   label: "Resolução de problemas" }
-  ];
-
-  const workPreferenceOptions = [
-    { id: "sozinho",               label: "Trabalhar sozinho" },
-    { id: "equipe",                label: "Trabalhar em equipe" },
-    { id: "depende",               label: "Depende da atividade" },
-  ];
-
-  const workEnvironmentOptions = [
-    { id: "remoto",                label: "Trabalho remoto" },
-    { id: "hibrido",               label: "Trabalho híbrido" },
-    { id: "presencial",            label: "Trabalho presencial" },
-  ];
-
-  const companyTypeOptions = [
-    { id: "tradicional",           label: "Empresa tradicional" },
-    { id: "inovacao",              label: "Empresa de inovação" },
-  ];
-
   const handleInterestChange = (id: string, checked: boolean) => {
     const current = formData.userInterests || [];
     if (checked && current.length < 3) {

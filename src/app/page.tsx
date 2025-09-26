@@ -2,11 +2,11 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
+// import Image from "next/image";
+// import Link from "next/link";
 import { toast } from "sonner";
 import LoginForm from "@/components/LoginForm";
-import PromoSection from "@/components/PromoSection";
+// import PromoSection from "@/components/PromoSection";
 import { loginUser } from "@/services/auth";
 import { useAuth } from "@/hooks/useAuth";
 

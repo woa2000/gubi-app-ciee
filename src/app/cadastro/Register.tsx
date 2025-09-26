@@ -14,11 +14,11 @@ import { registerUser, checkEmailExists } from "@/services/auth";
 
 import Step1PersonalData from "./Step1PersonalData";
 import Step2Interests from "./Step2Interests";
-import Step3Education from "./Step3Education";
-import Step4Employment from "./Step4Employment";
-import Step5Skills from "./Step5Skills";
-import Step6Challenges from "./Step6Challenges";
-import Step7Socioeconomic from "./Step7Socioeconomic";
+// import Step3Education from "./Step3Education";
+// import Step4Employment from "./Step4Employment";
+// import Step5Skills from "./Step5Skills";
+// import Step6Challenges from "./Step6Challenges";
+// import Step7Socioeconomic from "./Step7Socioeconomic";
 import Step8Completion from "./Step8Completion";
 import SuccessScreen from "./SuccessScreen";
 
@@ -86,21 +86,6 @@ export default function Register() {
     ];
 
     const updateFormData = (updates: Partial<RegisterForm>) => setFormData(prev => ({ ...prev, ...updates }));
-
-    const shouldShowSchoolField = [
-        "o6_ano",
-        "o7_ano",
-        "o8_ano",
-        "o9_ano",
-        "o1-ano_medio",
-        "o2-ano_medio",
-        "o3-ano_medio"
-    ].includes(formData.grade);
-
-    const shouldShowInCollegeFields = [
-        "curso_tecnico",
-        "cursando_superior",
-    ].includes(formData.grade);
 
     const validateStep = (step: number): boolean => {
         switch (step) {
