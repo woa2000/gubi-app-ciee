@@ -118,30 +118,6 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="residence">Qual é o seu país? *</Label>
-          <div className="mb-2"></div>
-          <Select
-            value={formData.country}
-            onValueChange={(val) => {
-              updateFormData({ country: val as CountryCode, phone: "", location: "" });
-              setCity("");
-              setState("");
-            }}
-          >
-            <SelectTrigger id="residence">
-              <SelectValue placeholder="Selecione onde você mora" />
-            </SelectTrigger>
-            <SelectContent>
-              {countryCodes.map((c) => (
-                <SelectItem key={c} value={c}>
-                  {regionNames.of(c) ?? c}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div>
           <Label htmlFor="phone">Se tiver WhatsApp, qual é o número?</Label>
           <div className="mb-2"></div>
           <Input
@@ -228,19 +204,6 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="birthDate">Quando é o seu aniversário? *</Label>
-          <div className="mb-2"></div>
-          <Input
-            id="birthDate"
-            type="date"
-            value={formData.birthDate}
-            onChange={(e) =>
-              updateFormData({ birthDate: e.target.value })
-            }
-          />
-        </div>
-
-        <div>
           <Label htmlFor="gender">Você se identifica com que gênero? *</Label>
           <div className="mb-2"></div>
           <Select
@@ -274,69 +237,56 @@ export default function Step1PersonalData({
           )}
         </div>
 
-        {formData.country === "BR" ? (
-          <>
-            <div>
-              <Label htmlFor="state">Qual seu estado? *</Label>
-              <div className="mb-2" />
-              <Select
-                value={state}
-                onValueChange={(value) => {
-                  setState(value);
+        <div>
+          <Label htmlFor="state">Qual seu estado? *</Label>
+          <div className="mb-2" />
+          <Select
+            value={state}
+            onValueChange={(value) => {
+              setState(value);
 
-                  if (!value) updateFormData({ location: "" });
-                  else updateFormData({ location: `${city} - ${value}` });
-                }}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione seu estado" />
-                </SelectTrigger>
-                <SelectContent>
-                  {STATES.map((opt) => (
-                    <SelectItem key={opt.id} value={opt.id}>
-                      {opt.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+              if (!value) updateFormData({ location: "" });
+              else updateFormData({ location: `${city} - ${value}` });
+            }}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Selecione seu estado" />
+            </SelectTrigger>
+            <SelectContent>
+              {STATES.map((opt) => (
+                <SelectItem key={opt.id} value={opt.id}>
+                  {opt.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-            <div>
-              <Label htmlFor="city">Qual sua cidade? *</Label>
-              <div className="mb-2" />
-              <Select
-                value={city}
-                onValueChange={(value) => {
-                  setCity(value);
-                  updateFormData({ location: `${value} - ${state}` });
-                }}
-                disabled={!state}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder={state ? "Selecione sua cidade" : "Escolha o estado primeiro"} />
-                </SelectTrigger>
-                <SelectContent className="max-h-60 overflow-auto">
-                  {citiesList.map((c) => (
-                    <SelectItem key={c.id} value={c.nome}>
-                      {c.nome}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </>
-        ) : (
-          <div>
-            <Label htmlFor="location">Onde você mora? *</Label>
-            <div className="mb-2" />
-            <Input
-              id="location"
-              value={formData.location}
-              onChange={(e) => updateFormData({ location: e.target.value })}
-              placeholder="Digite sua cidade e estado"
-            />
-          </div>
-        )}
+        <div>
+          <Label htmlFor="city">Qual sua cidade? *</Label>
+          <div className="mb-2" />
+          <Select
+            value={city}
+            onValueChange={(value) => {
+              setCity(value);
+              updateFormData({ location: `${value} - ${state}` });
+            }}
+            disabled={!state}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder={state ? "Selecione sua cidade" : "Escolha o estado primeiro"} />
+            </SelectTrigger>
+            <SelectContent className="max-h-60 overflow-auto">
+              {citiesList.map((c) => (
+                <SelectItem key={c.id} value={c.nome}>
+                  {c.nome}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+
       </div>
     </div>
   );

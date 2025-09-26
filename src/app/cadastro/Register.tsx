@@ -77,16 +77,11 @@ export default function Register() {
         acceptsDataUsage: false,
     });
 
-    const totalSteps = 8;
+    const totalSteps = 3;
     const progress = (currentStep / (totalSteps + 1)) * 100;
     const stepTitles = [
         "Quem é você no seu jogo?",
-        "Quais são seus interesses profissionais?",
-        "Seu futuro no game",
-        "Missões e experiências na vida real",
-        "Suas forças e desafios no jogo",
-        "Seu mundo digital e desafios",
-        "Seu time e suporte na jornada",
+        "Quais são seus interesses profissionais?",       
         "Inicio da jornada"
     ];
 
@@ -111,42 +106,14 @@ export default function Register() {
         switch (step) {
             case 1:
                 return !!(formData.fullName && formData.email && formData.password &&
-                    formData.confirmPassword && formData.birthDate && formData.country &&
-                    formData.gender && formData.location);
+                    formData.confirmPassword && formData.gender);
             case 2:
                 return !!(formData.userInterests.length > 0 && formData.workPreference &&
-                    formData.workEnvironment && formData.companyType && formData.userSkills.length > 0);
+                    formData.userSkills.length > 0);            
             case 3:
-                return !!(formData.grade && (!shouldShowSchoolField || formData.currentInstitution) && formData.wantsFaculty &&
-                    (!shouldShowInCollegeFields || formData.currentInstitution) && (!shouldShowInCollegeFields || formData.courseName) &&
-                    (!shouldShowInCollegeFields || formData.startCourseDate) && (!shouldShowInCollegeFields || formData.endCourseDate) &&
-                    formData.studyFormat && formData.needsFinancialSupport && formData.wantsFinancialInfo);
-            case 4:
-                return !!(formData.twoYearGoals.length > 0 && formData.workWhileStudying &&
-                    formData.hasInternshipExperience);
-            case 5:
-                return !!(formData.softSkills.length > 0 && formData.skillsToImprove.length > 0 &&
-                    formData.learningPreference && formData.studyFrequency);
-            case 6:
-                return !!(formData.thoughtAboutQuitting && formData.internetAccess &&
-                    formData.availableDevices.length > 0);
-            case 7:
                 return !!(
-                    formData.householdSize &&
-                    formData.peopleWithIncome &&
-                    (
-                        formData.participatesInSocialProgram !== "sim" ||
-                        (formData.participatesInSocialProgram === "sim" && formData.socialProgram)
-                    )
-                );
-            case 8:
-                return !!(
-                    formData.howFoundUs && formData.acceptsTerms &&
-                    formData.acceptsDataUsage &&
-                    (
-                        formData.howFoundUs !== "outro" ||
-                        (formData.howFoundUs === "outro" && formData.customHowFoundUs)
-                    ));
+                    formData.acceptsTerms &&
+                    formData.acceptsDataUsage);
             default:
                 return true;
         }
@@ -167,7 +134,7 @@ export default function Register() {
 
             if (currentStep === 1) {
                 if (!formData.fullName || !formData.email || !formData.password ||
-                    !formData.confirmPassword || !formData.birthDate || !formData.country) {
+                    !formData.confirmPassword ) {
                     toast.error("Campos obrigatórios", { description: "Preencha tudo antes de continuar." });
                     return;
                 }
@@ -252,13 +219,8 @@ export default function Register() {
         const props = { formData, updateFormData };
         switch (currentStep) {
             case 1: return <Step1PersonalData {...props} />;
-            case 2: return <Step2Interests {...props} />;
-            case 3: return <Step3Education {...props} />;
-            case 4: return <Step4Employment {...props} />;
-            case 5: return <Step5Skills {...props} />;
-            case 6: return <Step6Challenges {...props} />;
-            case 7: return <Step7Socioeconomic {...props} />;
-            case 8: return <Step8Completion {...props} />;
+            case 2: return <Step2Interests {...props} />;            
+            case 3: return <Step8Completion {...props} />;
             default: return null;
         }
     };

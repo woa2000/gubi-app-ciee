@@ -37,38 +37,6 @@ export default function Step8Completion({
         </p>
       </div>
 
-      {/* Como conheceu */}
-      <div>
-        <Label className="text-base font-medium">
-          Como conheceu a Jornada ProFuturo? *
-        </Label>
-        <RadioGroup
-          value={formData.howFoundUs}
-          onValueChange={(value) =>
-            updateFormData({ howFoundUs: value })
-          }
-          className="mt-2 space-y-2"
-        >
-          {howFoundOptions.map(opt => (
-            <div key={opt.id} className="flex items-center space-x-2">
-              <RadioGroupItem value={opt.id} id={`howFoundUs-${opt.id}`} />
-              <Label htmlFor={`howFoundUs-${opt.id}`}>{opt.label}</Label>
-            </div>
-          ))}
-        </RadioGroup>
-        {formData.howFoundUs == "outro" && (
-          <Input
-            id="customHowFoundUs"
-            value={formData.customHowFoundUs}
-            onChange={(e) =>
-              updateFormData({ customHowFoundUs: e.target.value })
-            }
-            placeholder="Especifique *"
-            className="mt-2 h-8"
-          />
-        )}
-      </div>
-
       {/* Consentimento */}
       <div className="space-y-4 pt-4 border-t border-gray-200">
         <h3 className="text-lg font-medium text-gray-900">Consentimento *</h3>

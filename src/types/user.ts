@@ -6,7 +6,7 @@
         confirmPassword: string;
         country: string;
         phone: string;
-        birthDate: string;
+        birthDate?: string;
         gender: string;
         customGender: string;
         location: string;

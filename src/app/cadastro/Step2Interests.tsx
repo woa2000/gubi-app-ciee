@@ -23,16 +23,33 @@ export default function Step2Interests({
   updateFormData,
 }: Props) {
   const interestOptions = [
-    { id: "saude",                 label: "Saúde" },
-    { id: "tecnologia",            label: "Tecnologia" },
-    { id: "negocios",              label: "Negócios" },
-    { id: "engenharia",            label: "Engenharia" },
-    { id: "arte_design",           label: "Arte e Design" },
-    { id: "comunicacao",           label: "Comunicação" },
-    { id: "meio_ambiente",         label: "Meio Ambiente" },
-    { id: "educacao",              label: "Educação" },
-    { id: "empreendedorismo",      label: "Empreendedorismo" },
-    { id: "financas",              label: "Finanças" }
+    { id: "saude",                 label: "Saúde e bem-estar" },
+    { id: "tecnologia",            label: "Tecnologia e informática" },
+    { id: "ciencias",              label: "Ciências (exatas, biológicas, humanas)" },
+    { id: "arte_design",           label: "Artes (música, teatro, dança, desenho, etc.)" },
+    { id: "comunicacao",           label: "Comunicação e mídias sociais" },
+    { id: "meio_ambiente",         label: "Sustentabilidade e meio ambiente" },
+    { id: "educacao",              label: "Educação e ensino" },
+    { id: "empreendedorismo",      label: "Negócios e empreendedorismo" },
+    { id: "esportes",              label: "Esportes" },
+  ];
+
+  const learningOptions = [
+    { id: "pratica",                 label: "Práticas (colocar a mão na massa, testar, experimentar)" },
+    { id: "teoria",            label: "Teóricas (ler, estudar, pesquisar, analisar)" },
+    { id: "comunicacao",              label: "De comunicação (falar, apresentar, interagir com pessoas)" },
+    { id: "criativa",            label: "Criativas (inventar, imaginar, desenhar, criar coisas novas)" },
+    { id: "digital",           label: "Digitais (usar tecnologia, aplicativos, jogos, internet)" },
+  ];
+
+
+  const motivationOptions = [
+    { id: "estabilidade-financeira",               label: "Ter uma profissão com estabilidade financeira" },
+    { id: "equipe",                label: "Trabalhar com algo que eu goste e me faça feliz" },
+    { id: "ajudar",               label: "Ajudar pessoas ou causas sociais" },
+    { id: "empreender",               label: "Criar coisas novas ou ter meu próprio negócio" },
+    { id: "crescer",               label: "Crescer na carreira e ter reconhecimento profissional" },
+    { id: "equilibrio",               label: "Ter equilíbrio entre vida pessoal e profissional" },
   ];
 
   const userSkillOptions = [
@@ -76,7 +93,7 @@ export default function Step2Interests({
     }
   };
 
-  const handleSkillChange = (id: string, checked: boolean) => {
+  const handleLearningChange = (id: string, checked: boolean) => {
     const current = formData.userSkills || [];
     if (checked && current.length < 3) {
       updateFormData({ userSkills: [...current, id] });
@@ -154,10 +171,40 @@ export default function Step2Interests({
         </p>
       </div>
 
+      {/* Estilo Aprender */}
+      <div>
+        <Label htmlFor="learning-group" className="text-base font-medium">
+         De que forma você prefere aprender ou desenvolver suas atividades no dia a dia? (até 3) *
+        </Label>
+        <div id="learning-group" className="grid grid-cols-2 gap-3 mt-3">
+          {learningOptions.map((opt) => (
+            <div key={opt.id} className="flex items-center space-x-2">
+              <Checkbox
+                id={`learning-${opt.id}`}
+                checked={formData.userSkills?.includes(opt.id)}
+                onCheckedChange={(checked) =>
+                  handleLearningChange(opt.id, checked as boolean)
+                }
+                disabled={
+                  !formData.userSkills?.includes(opt.id) &&
+                  (formData.userSkills?.length || 0) >= 3
+                }
+              />
+              <Label htmlFor={`learning-${opt.id}`} className="text-sm">
+                {opt.label}
+              </Label>
+            </div>
+          ))}
+        </div>        
+        <p className="text-xs text-gray-500 mt-2">
+          Selecionados: {formData.userSkills?.length || 0}/3
+        </p>
+      </div>
+
       {/* Preferência de trabalho */}
       <div>
         <Label className="text-base font-medium mb-2">
-          Como você prefere trabalhar? *
+          Quando você pensa no futuro, o que mais te motiva? *
         </Label>
         <Select
           value={formData.workPreference}
@@ -169,120 +216,14 @@ export default function Step2Interests({
             <SelectValue placeholder="Selecione sua preferência" />
           </SelectTrigger>
           <SelectContent>
-            {workPreferenceOptions.map((opt) => (
+            {motivationOptions.map((opt) => (
               <SelectItem key={opt.id} value={opt.id}>
                 {opt.label}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
-      </div>
-
-      {/* Ambiente de trabalho */}
-      <div>
-        <Label className="text-base font-medium mb-2">
-          Com qual ambiente você mais se identifica para trabalhar? *
-        </Label>
-        <Select
-          value={formData.workEnvironment}
-          onValueChange={(value) =>
-            updateFormData({ workEnvironment: value })
-          }
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Selecione sua preferência" />
-          </SelectTrigger>
-          <SelectContent>
-            {workEnvironmentOptions.map((opt) => (
-              <SelectItem key={opt.id} value={opt.id}>
-                {opt.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Tipo de empresa */}
-      <div>
-        <Label className="text-base font-medium mb-2">
-          Com qual tipo de empresa você mais se identifica para trabalhar? *
-        </Label>
-        <Select
-          value={formData.companyType}
-          onValueChange={(value) =>
-            updateFormData({ companyType: value })
-          }
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Selecione sua preferência" />
-          </SelectTrigger>
-          <SelectContent>
-            {companyTypeOptions.map((opt) => (
-              <SelectItem key={opt.id} value={opt.id}>
-                {opt.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Habilidades */}
-      <div>
-        <Label htmlFor="skills-group" className="text-base font-medium">
-          Quais dessas habilidades você tem como destaque? (até 3) *
-        </Label>
-        <div id="skills-group" className="grid grid-cols-2 gap-3 mt-3">
-          {userSkillOptions.map((opt) => (
-            <div key={opt.id} className="flex items-center space-x-2">
-              <Checkbox
-                id={`skill-${opt.id}`}
-                checked={formData.userSkills?.includes(opt.id)}
-                onCheckedChange={(checked) =>
-                  handleSkillChange(opt.id, checked as boolean)
-                }
-                disabled={
-                  !formData.userSkills?.includes(opt.id) &&
-                  (formData.userSkills?.length || 0) >= 3
-                }
-              />
-              <Label htmlFor={`skill-${opt.id}`} className="text-sm">
-                {opt.label}
-              </Label>
-            </div>
-          ))}
-        </div>
-        {/* “Outra” */}
-          <div className={`${formData.userSkills?.includes("outra") ? "mt-1" : "mt-2.5 mb-3.5"} flex items-center space-x-2`}>
-            <Checkbox
-              id="skill-outra"
-              checked={formData.userSkills?.includes("outra")}
-              onCheckedChange={(checked) =>
-                handleSkillChange("outra", checked as boolean)
-              }
-              disabled={
-                !formData.userSkills?.includes("outra") &&
-                (formData.userSkills?.length || 0) >= 3
-              }
-            />
-            <Label htmlFor="skill-outra" className="text-sm">
-              Outra:
-            </Label>
-            {formData.userSkills?.includes("outra") && (
-              <Input
-                id="customSkill"
-                value={formData.customSkill}
-                onChange={(e) =>
-                  updateFormData({ customSkill: e.target.value })
-                }
-                placeholder="Especifique"
-                className="ml-2 h-8"
-              />
-            )}
-          </div>
-        <p className="text-xs text-gray-500 mt-2">
-          Selecionadas: {formData.userSkills?.length || 0}/3
-        </p>
-      </div>
+      </div>      
     </div>
   );
 }
