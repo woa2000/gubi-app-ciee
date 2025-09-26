@@ -96,9 +96,44 @@ export default function Register() {
                 return !!(formData.userInterests.length > 0 && formData.workPreference &&
                     formData.userSkills.length > 0);            
             case 3:
-                return !!(
-                    formData.acceptsTerms &&
-                    formData.acceptsDataUsage);
+                // Validações adicionais para o step final
+                if (!formData.acceptsTerms || !formData.acceptsDataUsage) {
+                    return false;
+                }
+                
+                // Verificar se temos dados mínimos necessários
+                const hasBasicInfo = !!(
+                    formData.fullName?.trim() &&
+                    formData.email?.trim() &&
+                    formData.password &&
+                    formData.gender
+                );
+                
+                const hasInterests = formData.userInterests.length > 0;
+                const hasSkills = formData.userSkills.length > 0;
+                
+                if (!hasBasicInfo) {
+                    toast.error("Dados básicos incompletos", { 
+                        description: "Nome, email, senha e gênero são obrigatórios." 
+                    });
+                    return false;
+                }
+                
+                if (!hasInterests) {
+                    toast.error("Interesses obrigatórios", { 
+                        description: "Selecione pelo menos um interesse profissional." 
+                    });
+                    return false;
+                }
+                
+                if (!hasSkills) {
+                    toast.error("Habilidades obrigatórias", { 
+                        description: "Selecione pelo menos uma habilidade." 
+                    });
+                    return false;
+                }
+                
+                return true;
             default:
                 return true;
         }
@@ -181,22 +216,53 @@ export default function Register() {
         setSubmittingMessage("Registrando usuário...");
 
         try {
+            console.log('[Register] Iniciando registro com dados:', {
+                email: formData.email,
+                fullName: formData.fullName,
+                hasRequiredFields: !!(formData.fullName && formData.email && formData.password),
+                dataSize: JSON.stringify(formData).length
+            });
+            
             await registerUser(formData);
+            
             toast.success("Cadastro realizado com sucesso!", {
                 description: "Você está pronto para começar sua jornada!",
             });
             setIsRegistered(true);
         } catch (error: unknown) {
-            console.error("Erro ao registrar usuário:", error);
+            console.error("[Register] Erro detalhado ao registrar usuário:", {
+                error,
+                errorType: typeof error,
+                errorMessage: error instanceof Error ? error.message : String(error),
+                formDataKeys: Object.keys(formData),
+                timestamp: new Date().toISOString()
+            });
 
-            let errorMessage = "Ocorreu um erro ao tentar registrar seu cadastro. Por favor, tente novamente mais tarde.";
+            let errorMessage = "Ocorreu um erro no servidor. Tente novamente em alguns instantes.";
 
-            if (error instanceof Error) errorMessage = error.message;
-            else if (typeof error === "string") errorMessage = error;
+            if (error instanceof Error) {
+                errorMessage = error.message;
+                
+                // Mensagens mais amigáveis para erros comuns
+                if (error.message.includes('email')) {
+                    errorMessage = "Problema com o e-mail informado. Verifique se está correto.";
+                } else if (error.message.includes('password')) {
+                    errorMessage = "Problema com a senha. Verifique os requisitos de segurança.";
+                } else if (error.message.includes('validation')) {
+                    errorMessage = "Alguns dados não estão no formato correto. Verifique os campos obrigatórios.";
+                } else if (error.message.includes('duplicate') || error.message.includes('exists')) {
+                    errorMessage = "Este e-mail já está cadastrado. Tente fazer login ou usar outro e-mail.";
+                }
+            } else if (typeof error === "string") {
+                errorMessage = error;
+            }
 
             toast.error("Erro ao registrar usuário", {
                 description: errorMessage,
+                duration: 6000
             });
+        } finally {
+            setSubmittingMessage("");
         }
     };
 
