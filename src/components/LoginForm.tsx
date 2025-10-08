@@ -96,7 +96,7 @@ export default function LoginForm({ onSubmit, isLoading = false }: LoginFormProp
                 onChange={(e) => setPassword(e.target.value)}
                 className="pl-10 pr-10"
                 required
-                minLength={8}
+                minLength={4}
               />
               <button
                 type="button"
