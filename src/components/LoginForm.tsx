@@ -19,34 +19,12 @@ export default function LoginForm({ onSubmit, isLoading = false }: LoginFormProp
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [emailError, setEmailError] = useState("");
-
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    return emailRegex.test(email.toLowerCase());
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setEmail(value);
-    
-    if (value && !validateEmail(value)) {
-      setEmailError("Por favor, insira um email válido");
-    } else {
-      setEmailError("");
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!email || !password) {
       toast.error("Preencha todos os campos");
-      return;
-    }
-
-    if (!validateEmail(email)) {
-      setEmailError("Por favor, insira um email válido");
       return;
     }
 
@@ -99,17 +77,11 @@ export default function LoginForm({ onSubmit, isLoading = false }: LoginFormProp
                 type="email"
                 placeholder="seu@email.com"
                 value={email}
-                onChange={handleEmailChange}
-                className={`pl-10 ${emailError ? "border-red-500" : ""}`}
+                onChange={(e) => setEmail(e.target.value)}
+                className="pl-10"
                 required
-                aria-describedby={emailError ? "email-error" : undefined}
               />
             </div>
-            {emailError && (
-              <p id="email-error" className="text-sm text-red-600" role="alert">
-                {emailError}
-              </p>
-            )}
           </div>
 
           <div className="space-y-2">
@@ -140,7 +112,7 @@ export default function LoginForm({ onSubmit, isLoading = false }: LoginFormProp
           <Button 
             type="submit" 
             className="w-full" 
-            disabled={isLoading || !!emailError}
+            disabled={isLoading}
           >
             {isLoading ? (
               <>
