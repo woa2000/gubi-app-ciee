@@ -3,7 +3,7 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, CheckCircle } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 
 import { RegisterForm } from "@/types/user";
 
@@ -19,45 +19,7 @@ export default function Step1PersonalData({
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
-  const passwordValidation = {
-    minLength: (formData.password || "").length >= 8,
-    hasUpperCase: /[A-Z]/.test(formData.password || ""),
-    hasLowerCase: /[a-z]/.test(formData.password || ""),
-    hasNumber: /\d/.test(formData.password || ""),
-    hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(formData.password || "")
-  };
 
-  const isPasswordValid = Object.values(passwordValidation).every(Boolean);
-  const hasPasswordContent = (formData.password || "").length > 0;
-
-  const incompleteRequirements = Object.entries({
-    minLength: "Pelo menos 8 caracteres",
-    hasUpperCase: "Pelo menos 1 letra maiúscula",
-    hasLowerCase: "Pelo menos 1 letra minúscula",
-    hasNumber: "Pelo menos 1 número",
-    hasSpecialChar: "Pelo menos 1 caractere especial"
-  }).filter(([key]) => !passwordValidation[key as keyof typeof passwordValidation]);
-
-  const shouldShowRequirements = hasPasswordContent && !isPasswordValid;
-
-  const formatPhone = (value: string) => {
-    const digits = value.replace(/\D/g, "")
-
-    if (digits.length === 0) return ""
-    if (digits.length < 3) return `(${digits}`
-
-    if (digits.length < 7)
-      return `(${digits.slice(0, 2)}) ${digits.slice(2)}`
-
-    if (digits.length <= 10)
-      return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`
-
-    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`
-  }
-
-  function formatInternationalPhone(raw: string): string {
-    return raw.replace(/[^0-9+\-()]/g, "");
-  }
 
   return (
     <div className="space-y-6">
@@ -97,42 +59,8 @@ export default function Step1PersonalData({
         </div>
 
         <div>
-          <Label htmlFor="phone">Se tiver WhatsApp, qual é o número?</Label>
-          <div className="mb-2"></div>
-          <Input
-            id="phone"
-            value={formData.phone}
-            onChange={(e) => {
-              if (formData.country === "BR") {
-                const formatted = formatPhone(e.target.value)
-                updateFormData({ phone: formatted })
-              }
-              else {
-                const formatted = formatInternationalPhone(e.target.value)
-                updateFormData({ phone: formatted })
-              }
-            }}
-            placeholder="Digite o seu número de WhatsApp"
-          />
-        </div>
-
-        <div>
           <Label htmlFor="password">Senha *</Label>
           <div className="mb-2"></div>
-          {shouldShowRequirements && (
-            <div className="mb-3 p-3 bg-gray-50 rounded-md border">
-              <p className="text-sm font-medium text-gray-700 mb-2">Requisitos da senha:</p>
-              <div className="space-y-1">
-                {incompleteRequirements.map(([key, label]) => (
-                  <div key={key} className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-gray-300" />
-                    <span className="text-sm text-gray-500">{label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
           <div className="relative">
             <Input
               id="password"

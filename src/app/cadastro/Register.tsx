@@ -138,11 +138,6 @@ export default function Register() {
         }
     };
 
-    const isValidPhone = (phone: string): boolean => {
-        if (phone.trim() === "") return true;
-        return /^\(\d{2}\) \d{4,5}-\d{4}$/.test(phone);
-    };
-
     const isValidEmail = (email: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.toLowerCase())
 
     const handleNext = async () => {
@@ -168,24 +163,10 @@ export default function Register() {
                     return;
                 }
 
-                const passwordValid = formData.password && formData.password.length >= 8 &&
-                    /[A-Z]/.test(formData.password) &&
-                    /[a-z]/.test(formData.password) &&
-                    /\d/.test(formData.password) &&
-                    /[!@#$%^&*(),.?":{}|<>]/.test(formData.password);
                 const passwordsMatch = formData.password === formData.confirmPassword
 
-                if (!passwordValid) {
-                    toast.error("Senha inválida", { description: "A senha não segue os requisitos necessários." });
-                    return;
-                }
                 if (!passwordsMatch) {
                     toast.error("Senhas não coincidem", { description: "Por favor, verifique suas senhas." });
-                    return;
-                }
-
-                if (formData.country === "BR" && !isValidPhone(formData.phone)) {
-                    toast.error("Telefone inválido", { description: "Por favor, insira um telefone válido." });
                     return;
                 }
             }
