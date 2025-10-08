@@ -91,7 +91,7 @@ export default function Register() {
         switch (step) {
             case 1:
                 return !!(formData.fullName && formData.email && formData.password &&
-                    formData.confirmPassword && formData.gender);
+                    formData.confirmPassword);
             case 2:
                 return !!(formData.userInterests.length > 0 && formData.workPreference &&
                     formData.userSkills.length > 0);            
@@ -105,8 +105,7 @@ export default function Register() {
                 const hasBasicInfo = !!(
                     formData.fullName?.trim() &&
                     formData.email?.trim() &&
-                    formData.password &&
-                    formData.gender
+                    formData.password
                 );
                 
                 const hasInterests = formData.userInterests.length > 0;
@@ -114,7 +113,7 @@ export default function Register() {
                 
                 if (!hasBasicInfo) {
                     toast.error("Dados básicos incompletos", { 
-                        description: "Nome, email, senha e gênero são obrigatórios." 
+                        description: "Nome, email e senha são obrigatórios." 
                     });
                     return false;
                 }

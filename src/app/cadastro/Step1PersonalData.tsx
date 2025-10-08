@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Eye, EyeOff, CheckCircle } from "lucide-react";
-import { STATES, fetchCitiesByState, CityOption } from "@/services/locationService";
 
 import { RegisterForm } from "@/types/user";
 
@@ -20,21 +18,6 @@ export default function Step1PersonalData({
 }: Props) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-  const [citiesList, setCitiesList] = useState<CityOption[]>([]);
-  const [city, setCity] = useState(formData.location.split(" - ")[0] || "");
-  const [state, setState] = useState(formData.location.split(" - ")[1] || "");
-
-  useEffect(() => {
-    if (!state) {
-      setCitiesList([]);
-      setCity("");
-      return;
-    }
-
-    fetchCitiesByState(state)
-      .then((data) => setCitiesList(data))
-      .catch(() => setCitiesList([]));
-  }, [state]);
 
   const passwordValidation = {
     minLength: (formData.password || "").length >= 8,
@@ -198,91 +181,6 @@ export default function Step1PersonalData({
             </button>
           </div>
         </div>
-
-        <div>
-          <Label htmlFor="gender">Você se identifica com que gênero? *</Label>
-          <div className="mb-2"></div>
-          <Select
-            value={formData.gender}
-            onValueChange={(value) =>
-              updateFormData({ gender: value })
-            }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Selecione seu gênero" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="feminino">Feminino</SelectItem>
-              <SelectItem value="masculino">Masculino</SelectItem>
-              <SelectItem value="prefiro-nao-responder">
-                Prefiro não responder
-              </SelectItem>
-              <SelectItem value="outro">Outro</SelectItem>
-            </SelectContent>
-          </Select>
-
-          {formData.gender === "outro" && (
-            <Input
-              value={formData.customGender}
-              onChange={(e) =>
-                updateFormData({ customGender: e.target.value })
-              }
-              placeholder="Especifique"
-              className="mt-2"
-            />
-          )}
-        </div>
-
-        <div>
-          <Label htmlFor="state">Qual seu estado? *</Label>
-          <div className="mb-2" />
-          <Select
-            value={state}
-            onValueChange={(value) => {
-              setState(value);
-
-              if (!value) updateFormData({ location: "" });
-              else updateFormData({ location: `${city} - ${value}` });
-            }}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Selecione seu estado" />
-            </SelectTrigger>
-            <SelectContent>
-              {STATES.map((opt) => (
-                <SelectItem key={opt.id} value={opt.id}>
-                  {opt.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div>
-          <Label htmlFor="city">Qual sua cidade? *</Label>
-          <div className="mb-2" />
-          <Select
-            value={city}
-            onValueChange={(value) => {
-              setCity(value);
-              updateFormData({ location: `${value} - ${state}` });
-            }}
-            disabled={!state}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder={state ? "Selecione sua cidade" : "Escolha o estado primeiro"} />
-            </SelectTrigger>
-            <SelectContent className="max-h-60 overflow-auto">
-              {citiesList.map((c) => (
-                <SelectItem key={c.id} value={c.nome}>
-                  {c.nome}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-
       </div>
     </div>
   );
