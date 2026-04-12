@@ -3,7 +3,7 @@ export const getApiBaseUrl = () => {
   const useRealAPI = process.env.NEXT_PUBLIC_USE_REAL_API === 'true';
   
   if (useRealAPI) {
-    return 'https://gubi-server.onrender.com/api';
+    return 'http://q8skw04k0k8gwcsggscc8www.212.85.13.23.sslip.io/api';
   }
   
   // Fallback para configuração original
