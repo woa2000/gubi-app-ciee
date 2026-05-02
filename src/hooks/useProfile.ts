@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
 import { useAuth } from './useAuth';
 import { profileService, ProfileCache } from '@/services/profile';
+import { getApiBaseUrl } from '@/lib/apiBase';
 import { 
   UserProfile, 
   EditableProfileFields,
@@ -37,6 +38,7 @@ export const useProfile = (): UseProfileReturn => {
   const { getAuthToken, getCurrentUser } = useAuth();
   const currentUser = getCurrentUser();
   const token = getAuthToken();
+  const currentUserId = currentUser?.id;
   
   // Estado do hook
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -54,11 +56,11 @@ export const useProfile = (): UseProfileReturn => {
       useRealApi,
       hasUser: !!currentUser,
       hasToken: !!token,
-      userId: currentUser?.id,
-      apiBaseUrl: useRealApi ? 'https://gubi-server.onrender.com/api' : 'mock',
+      userId: currentUserId,
+      apiBaseUrl: useRealApi ? getApiBaseUrl() : 'mock',
       NEXT_PUBLIC_USE_REAL_API: process.env.NEXT_PUBLIC_USE_REAL_API
     });
-  }, [currentUser, token]); // Incluindo currentUser completo para debug
+  }, [currentUserId, token]);
 
   /**
    * Busca perfil do usuário (com cache offline-first)
@@ -448,7 +450,7 @@ export const useProfile = (): UseProfileReturn => {
     };
 
     loadProfile();
-  }, [currentUser, token]); // Incluindo currentUser para detectar mudanças de usuário
+  }, [currentUserId, token]);
 
   // Utilitários computados
   const isProfileComplete = profile ? ProfileValidation.isProfileComplete(profile) : false;

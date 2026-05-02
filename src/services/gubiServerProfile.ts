@@ -1,28 +1,27 @@
-import { getDefaultHeaders, getUploadHeaders } from '@/lib/apiBase';
-import { 
+import { getDefaultHeaders, getUploadHeaders, getApiBaseUrl } from '@/lib/apiBase';
+import {
   GubiServerProfileData,
-  GubiServerProfileResponse, 
+  GubiServerProfileResponse,
   GubiServerImageUploadResponse,
   GubiServerImageDeleteResponse,
-  GubiServerError
+  GubiServerError,
 } from '@/types/gubiServerApi';
-import { 
-  mapGubiServerToUserProfile, 
+import {
+  mapGubiServerToUserProfile,
   mapFrontendToGubiServerUpdate,
-  sanitizeForLog 
+  sanitizeForLog,
 } from '@/types/gubiServerMapper';
-import { 
+import {
   EditableProfileFields,
   ProfileApiResponse,
-  ProfileUpdateApiResponse 
+  ProfileUpdateApiResponse,
 } from '@/types/profile';
 
 /**
  * Serviço para integração com a API do Gubi Server
- * URL base: https://gubi-server.onrender.com/api
  */
 export class GubiServerProfileService {
-  private baseUrl = 'https://gubi-server.onrender.com/api';
+  private baseUrl = getApiBaseUrl();
 
   /**
    * Busca o perfil completo do usuário

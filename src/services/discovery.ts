@@ -1,4 +1,4 @@
-import { getDefaultHeaders } from '@/lib/apiBase';
+import { getDefaultHeaders, getApiBaseUrl } from '@/lib/apiBase';
 import { DiscoveryResumeRequest, DiscoveryResumeResponse } from '@/types/discovery';
 
 /**
@@ -13,7 +13,7 @@ export const sendDiscoveryResume = async (
 ): Promise<DiscoveryResumeResponse> => {
   try {
     // Usar a mesma URL base dos outros serviços
-    const baseUrl = 'https://gubi-server.onrender.com/api';
+    const baseUrl = getApiBaseUrl();
     const headers = getDefaultHeaders(token);
 
     console.log('📤 Discovery API Request:', {
